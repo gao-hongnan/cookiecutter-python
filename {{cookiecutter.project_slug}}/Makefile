@@ -28,7 +28,7 @@ lint:
 	@docker run --rm -v "$(PWD):/src:rw" -w /src hadolint/hadolint:v2.12.0 hadolint environments/container/Dockerfile
 {% endif %}
 	@echo "Running Markdown linting..."
-	@npx markdownlint "**/*.md" --config .markdownlint.json --ignore node_modules --ignore .venv
+	@npx markdownlint-cli "**/*.md" --config .markdownlint.json --ignore node_modules --ignore .venv
 	@echo "All linting checks passed!"
 
 security:
