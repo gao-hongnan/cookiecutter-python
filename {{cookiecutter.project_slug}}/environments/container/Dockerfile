@@ -1,6 +1,7 @@
 ARG BUILDER_IMAGE=astral/uv:0.9.2-bookworm
 ARG RUNNER_IMAGE=debian:12.12-slim
 
+# hadolint ignore=DL3006
 FROM ${BUILDER_IMAGE} AS builder
 
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
@@ -21,6 +22,7 @@ COPY . /app
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked --no-dev
 
+# hadolint ignore=DL3006
 FROM ${RUNNER_IMAGE} AS runner
 
 LABEL org.opencontainers.image.title="{{ cookiecutter.project_slug }}"
