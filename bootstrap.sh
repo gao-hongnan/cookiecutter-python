@@ -6,7 +6,14 @@
 
 set -euo pipefail
 
-TEMPLATE_DIR="$(cd "$(dirname "$0")" && pwd)"
+REPO_URL="https://github.com/gao-hongnan/cookiecutter-python.git"
+
+if [[ "$0" == /dev/fd/* ]] || [[ "$0" == /proc/self/fd/* ]] || [[ ! -f "$0" ]]; then
+    TEMPLATE_DIR="$REPO_URL"
+else
+    TEMPLATE_DIR="$(cd "$(dirname "$0")" && pwd)"
+fi
+
 CURRENT_DIR="$(pwd)"
 
 # Clear stale replay cache so cookiecutter always prompts
