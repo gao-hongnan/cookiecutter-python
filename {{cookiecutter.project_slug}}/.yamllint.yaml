@@ -1,0 +1,36 @@
+extends: default
+
+rules:
+  document-start: disable
+  line-length:
+    max: 180
+    level: warning
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: {}
+  colons:
+    max-spaces-before: -1
+    max-spaces-after: 1
+  truthy:
+    allowed-values:
+      - 'true'
+      - 'false'
+      - 'True'
+      - 'False'
+      - 'yes'
+      - 'no'
+      - 'on'
+      - 'off'
+
+ignore: |
+  .venv/
+  node_modules/
+  .git/
+  .github/
+  dist/
+  build/
+  __pycache__/

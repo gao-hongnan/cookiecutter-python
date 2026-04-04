@@ -1,0 +1,47 @@
+{
+    "pythonVersion": "{{ cookiecutter.python_version }}",
+    "typeCheckingMode": "strict",
+    "reportMissingTypeStubs": false,
+    "reportUnnecessaryIsInstance": false,
+    "reportUnnecessaryTypeIgnoreComment": false,
+    "reportUnnecessaryCast": false,
+    "reportInvalidTypeVarUse": false,
+    "reportMissingModuleSource": false,
+    "reportUnknownParameterType": false,
+    "reportUnknownArgumentType": false,
+    "reportUnknownVariableType": false,
+    "reportUnknownMemberType": false,
+    "reportGeneralTypeIssues": true,
+    "reportOptionalSubscript": false,
+    "reportOptionalMemberAccess": false,
+    "reportOptionalCall": false,
+    "reportOptionalIterable": false,
+    "reportOptionalContextManager": false,
+    "reportOptionalOperand": false,
+    "reportPrivateUsage": false,
+    "include": [
+        "{{ cookiecutter.package_name }}",
+        "tests"
+    ],
+    "exclude": [
+        ".venv",
+        "venv",
+        "build",
+        "dist",
+        "**/__pycache__",
+        "**/*.pyc",
+        "**/.pytest_cache",
+        "**/.mypy_cache",
+        "**/.ruff_cache",
+        "**/node_modules"
+    ],
+    "venvPath": ".",
+    "venv": ".venv",
+    "executionEnvironments": [
+        {
+            "root": "tests",
+            "reportUnusedFunction": false,
+            "reportUnusedVariable": false
+        }
+    ]
+}

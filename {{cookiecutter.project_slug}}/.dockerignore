@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.ruff_cache/
+
+# Git
+.git/
+.github/
+.gitignore
+.gitattributes
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.claude/
+
+# Documentation
+playbook/
+playground/
+examples/
+*.md
+!README.md
+
+# Test artifacts & reports
+.memray/
+.benchmarks/
+coverage_html_report/
+
+# Environment
+.env
+.env.*
+!.env.sample
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+
+# Logs
+*.log
+logs/
+
+# Container
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Testing
+tests/
+test_*.py
+*_test.py
+conftest.py
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/

@@ -1,0 +1,14 @@
+[run]
+source =
+    {{ cookiecutter.package_name }}/
+
+omit =
+    */__init__.py
+    */tests/*
+
+[report]
+fail_under = 0
+show_missing = True
+
+[html]
+directory = coverage_html_report

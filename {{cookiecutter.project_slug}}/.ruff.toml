@@ -1,0 +1,66 @@
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+line-length = 120
+indent-width = 4
+target-version = "py{{ cookiecutter.python_version | replace('.', '') }}"
+output-format = "grouped"
+
+[lint]
+exclude = ["*.ipynb"]
+select = [
+    "ARG",
+    "ASYNC",
+    "B",
+    "C4",
+    "E",
+    "EXE",
+    "F",
+    "FA",
+    "I",
+    "PERF",
+    "PGH004",
+    "PLE",
+    "PLW",
+    "PT",
+    "PTH",
+    "PYI",
+    "SIM",
+    "TID",
+    "UP",
+    "W",
+]
+ignore = ["E501", "B008"]
+fixable = ["ALL"]
+unfixable = []
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[lint.isort]
+known-first-party = ["{{ cookiecutter.package_name }}"]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

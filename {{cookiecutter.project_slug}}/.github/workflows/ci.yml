@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_call:
+
+concurrency:
+  group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
+  cancel-in-progress: {% raw %}${{ github.ref != 'refs/heads/main' }}{% endraw %}
+
+env:
+  COLUMNS: 120
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+
+jobs:
+  ci:
+    name: CI Python {% raw %}${{ matrix.python-version }}{% endraw %} on {% raw %}${{ matrix.os }}{% endraw %}
+    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["{{ cookiecutter.python_version }}"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "latest"
+          python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
+          enable-cache: true
+          cache-dependency-glob: "**/pyproject.toml"
+
+      - name: Install dependencies
+        run: make install
+
+      - name: Run CI Pipeline
+        run: make ci
+
+      - name: Archive coverage reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-{% raw %}${{ matrix.os }}-${{ matrix.python-version }}{% endraw %}
+          path: |
+            htmlcov/
+            coverage.xml
+          retention-days: 7
