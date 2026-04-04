@@ -20,11 +20,14 @@ repos:
         args: [--strict]
 {% if cookiecutter.use_docker  %}
 
-  - repo: https://github.com/hadolint/hadolint
-    rev: v2.12.0
+  - repo: local
     hooks:
       - id: hadolint-docker
         name: Lint Dockerfiles
+        language: docker_image
+        entry: hadolint/hadolint:v2.12.0 hadolint
+        files: (^|/)Dockerfile(\..+)?$
+        pass_filenames: true
 {% endif %}
 
   - repo: https://github.com/igorshubovych/markdownlint-cli

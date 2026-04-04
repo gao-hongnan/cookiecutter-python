@@ -25,9 +25,9 @@ jobs:
         python-version: ["{{ cookiecutter.python_version }}"]
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v7
         with:
           version: "latest"
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
@@ -42,7 +42,7 @@ jobs:
 
       - name: Archive coverage reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: coverage-report-{% raw %}${{ matrix.os }}-${{ matrix.python-version }}{% endraw %}
           path: |
