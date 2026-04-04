@@ -25,10 +25,11 @@ lint:
 	@uv run yamllint .
 {% if cookiecutter.use_docker  %}
 	@echo "Running Dockerfile linting..."
-	@docker run --rm -v "$(PWD):/src:rw" -w /src hadolint/hadolint:v2.12.0 hadolint environments/container/Dockerfile
+	@docker run --rm -v "$(CURDIR):/workdir" -w /workdir hadolint/hadolint:v2.12.0 \
+		hadolint --config .hadolint.yaml environments/container/Dockerfile
 {% endif %}
 	@echo "Running Markdown linting..."
-	@npx markdownlint-cli "**/*.md" --config .markdownlint.json --ignore node_modules --ignore .venv
+	@npx markdownlint "**/*.md" --config .markdownlint.json --ignore node_modules --ignore .venv
 	@echo "All linting checks passed!"
 
 security:

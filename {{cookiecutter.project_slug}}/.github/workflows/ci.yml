@@ -27,6 +27,12 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - run: npm install -g markdownlint-cli
+
       - uses: astral-sh/setup-uv@v7
         with:
           version: "latest"
