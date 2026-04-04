@@ -6,32 +6,36 @@ type checking, CI, and Makefile — no code templates, no over-engineering.
 
 ## Usage
 
+### Option 1: Bootstrap script (recommended)
+
 ```bash
-~/templates/cookiecutter-pyproject/bootstrap.sh
+# Existing repo — scaffolds into current directory
+git clone git@github.com:you/your-repo.git && cd your-repo
+bash <(curl -fsSL https://raw.githubusercontent.com/gao-hongnan/cookiecutter-python/main/bootstrap.sh)
+
+# Greenfield — creates new project directory
+mkdir ~/projects/my-app && cd ~/projects/my-app
+bash <(curl -fsSL https://raw.githubusercontent.com/gao-hongnan/cookiecutter-python/main/bootstrap.sh)
 ```
 
-That's it. One command. It auto-detects:
+### Option 2: cookiecutter directly
+
+```bash
+pip install cookiecutter
+cookiecutter gh:gao-hongnan/cookiecutter-python
+```
+
+### Option 3: Local clone
+
+```bash
+git clone git@github.com:gao-hongnan/cookiecutter-python.git ~/templates/cookiecutter-python
+~/templates/cookiecutter-python/bootstrap.sh
+```
+
+All three auto-detect:
 
 - **Inside an existing git repo** → scaffolds into current directory (safe, no-clobber)
 - **Not in a repo** → creates a new project directory via cookiecutter
-
-### Typical workflows
-
-**Existing repo:**
-
-```bash
-git clone git@github.com:you/your-repo.git
-cd your-repo
-~/templates/cookiecutter-pyproject/bootstrap.sh
-```
-
-**Greenfield:**
-
-```bash
-mkdir ~/projects/my-app && cd ~/projects/my-app
-~/templates/cookiecutter-pyproject/bootstrap.sh
-cd <project-slug>
-```
 
 ## Options
 
@@ -120,3 +124,9 @@ For greenfield projects, the hook automatically runs:
 3. `pre-commit install` (pre-commit + commit-msg hooks)
 
 If any step fails, a warning is printed — run `make install` manually.
+
+## Requirements
+
+- Python 3.13+
+- [uv](https://docs.astral.sh/uv/) (installed automatically by bootstrap)
+- git
