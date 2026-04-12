@@ -20,4 +20,3 @@ def sample_fixture() -> dict[str, str]:
 
 # Add more shared fixtures here as needed
 # Examples: database session, mock clients, test data generators
-

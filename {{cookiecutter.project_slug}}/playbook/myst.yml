@@ -5,12 +5,12 @@ project:
     - name: "{{ cookiecutter.author_name }}"
       email: "{{ cookiecutter.author_email }}"
   github: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}
+  # MyST supports native admonition directives for theorem-like environments.
+  # See https://mystmd.org/guide/admonitions for details on creating
+  # custom admonitions (theorem, lemma, proof, etc.) without sphinx-proof.
   toc:
     - file: index.md
     - file: getting-started.md
     # Add more pages here
-  # MyST supports native admonition directives for theorem-like environments.
-  # See https://mystmd.org/guide/admonitions for details on creating
-  # custom admonitions (theorem, lemma, proof, etc.) without sphinx-proof.
 site:
   template: book-theme
