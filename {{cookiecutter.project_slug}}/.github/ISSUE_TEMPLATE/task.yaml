@@ -1,0 +1,83 @@
+name: Task
+description: A piece of work that isn't a bug report or feature request (refactor, chore, test, docs, infra)
+labels: ["task"]
+body:
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight
+      options:
+        - label: I searched existing issues for duplicates
+          required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - refactor
+        - chore
+        - test
+        - docs
+        - infra
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0 - Critical
+        - P1 - High
+        - P2 - Medium
+        - P3 - Low
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to be done and why
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Concrete, checkable conditions that mark this as done
+      placeholder: |
+        - [ ] `make ci` still passes
+        - [ ] No new public API surface introduced
+        - [ ] Docs section X updated
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: Out of scope / non-goals
+      description: What this task explicitly will NOT do
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies / related issues
+      description: Blockers or prerequisite work
+
+  - type: dropdown
+    id: sdd_stage
+    attributes:
+      label: SDD stage (optional)
+      description: Which Frost SDD stage this task targets, if known
+      options:
+        - (not applicable)
+        - socratic
+        - platonic
+        - dialectic
+        - poiesis
+        - elenchus
+        - critic

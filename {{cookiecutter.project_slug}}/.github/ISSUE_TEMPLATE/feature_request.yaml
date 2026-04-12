@@ -2,6 +2,14 @@ name: Feature Request
 description: Suggest a new feature or enhancement
 labels: ["enhancement"]
 body:
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight
+      options:
+        - label: I searched existing issues and discussions for duplicates
+          required: true
+
   - type: textarea
     id: problem
     attributes:
@@ -19,6 +27,31 @@ body:
       required: true
 
   - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Concrete, checkable conditions that mark this as done. Prefer bullet points.
+      placeholder: |
+        - [ ] `{{ cookiecutter.package_name }}.foo.bar` exposes `do_thing(x: int) -> Result`
+        - [ ] Documented in docs/reference/foo.md
+        - [ ] Unit test covers the empty-input edge case
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: non_goals
+    attributes:
+      label: Out of scope / non-goals
+      description: What this feature explicitly will NOT do
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies / related issues
+      description: Blockers, prerequisite work, or related tickets (e.g. "blocked by #42")
+
+  - type: textarea
     id: alternatives
     attributes:
       label: Alternatives Considered
@@ -32,3 +65,5 @@ body:
         - High
         - Medium
         - Low
+    validations:
+      required: true

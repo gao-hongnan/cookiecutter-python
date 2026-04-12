@@ -1,1 +1,8 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Questions & Discussions
+    url: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/discussions
+    about: Ask questions, share ideas, or discuss design decisions here instead of opening an issue.
+  - name: Report a security vulnerability
+    url: https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.project_slug }}/security/advisories/new
+    about: Please do NOT report security vulnerabilities as public issues. Use the Security Advisory tab so we can triage privately.
