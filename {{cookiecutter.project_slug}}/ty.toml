@@ -1,0 +1,48 @@
+# ==============================================================================
+# ty - Astral's fast type checker (experimental)
+# https://docs.astral.sh/ty/
+# ==============================================================================
+[environment]
+python-version = "{{ cookiecutter.python_version }}"
+python = ".venv"
+root = ["{{ cookiecutter.package_name }}", "tests"]
+
+[src]
+include = ["{{ cookiecutter.package_name }}", "tests"]
+exclude = [
+    ".venv/**",
+    ".git/**",
+    "__pycache__/**",
+    "*.pyc",
+    ".mypy_cache/**",
+    ".pytest_cache/**",
+    ".ruff_cache/**",
+    "dist/**",
+    "build/**",
+]
+
+[rules]
+unresolved-reference = "error"
+possibly-unresolved-reference = "error"
+invalid-assignment = "error"
+invalid-argument-type = "error"
+invalid-return-type = "error"
+call-non-callable = "error"
+missing-argument = "error"
+too-many-positional-arguments = "error"
+unknown-argument = "error"
+unsupported-operator = "error"
+invalid-type-form = "error"
+invalid-type-variable-constraints = "error"
+invalid-legacy-type-variable = "error"
+
+[terminal]
+output-format = "full"
+error-on-warning = false
+
+[[overrides]]
+include = ["tests/**", "**/test_*.py", "**/*_test.py"]
+
+[overrides.rules]
+possibly-unresolved-reference = "warn"
+unused-ignore-comment = "warn"

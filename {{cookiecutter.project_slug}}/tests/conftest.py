@@ -1,12 +1,23 @@
+"""Pytest configuration and fixtures.
+
+Markers are defined in pytest.ini.
+"""
+
 from __future__ import annotations
 
 import pytest
 
 
-def pytest_configure(config: pytest.Config) -> None:
-    """Register custom markers."""
-    config.addinivalue_line("markers", "slow: marks tests as slow")
-    config.addinivalue_line("markers", "integration: marks tests as integration tests")
-    config.addinivalue_line("markers", "unit: marks tests as unit tests")
-    config.addinivalue_line("markers", "memory: marks tests that check memory usage")
-    config.addinivalue_line("markers", "benchmark: marks performance benchmark tests")
+@pytest.fixture
+def sample_fixture() -> dict[str, str]:
+    """Example fixture for demonstration.
+
+    Returns:
+        Sample data dictionary
+    """
+    return {"key": "value"}
+
+
+# Add more shared fixtures here as needed
+# Examples: database session, mock clients, test data generators
+

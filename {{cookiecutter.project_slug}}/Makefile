@@ -23,7 +23,7 @@ lint:
 	@uv run ruff check $(SOURCES)
 	@echo "Running YAML linting..."
 	@uv run yamllint .
-{% if cookiecutter.use_docker  %}
+{% if cookiecutter.use_docker %}
 	@echo "Running Dockerfile linting..."
 	@docker run --rm -v "$(CURDIR):/workdir" -w /workdir hadolint/hadolint:v2.12.0 \
 		hadolint --config .hadolint.yaml environments/container/Dockerfile
@@ -74,10 +74,10 @@ clean:
 .PHONY: dev serve
 
 dev:
-	uv run uvicorn {{ cookiecutter.package_name }}.main:app --host 127.0.0.1 --port 8000 --reload
+	uv run uvicorn {{ cookiecutter.package_name }}.main:app --host 127.0.0.1 --port {{ cookiecutter.server_port }} --reload
 
 serve:
-	uv run uvicorn {{ cookiecutter.package_name }}.main:app --host 0.0.0.0 --port 8000
+	uv run uvicorn {{ cookiecutter.package_name }}.main:app --host 0.0.0.0 --port {{ cookiecutter.server_port }}
 {% endif %}
 {% if cookiecutter.use_database  %}
 
@@ -118,7 +118,7 @@ help:
 	@echo "Development Commands:"
 	@echo "  make install          Install dependencies and pre-commit hooks"
 	@echo "  make format           Format code with ruff"
-	@echo "  make lint             Lint code (Python, YAML{% if cookiecutter.use_docker  %}, Docker{% endif %}, Markdown)"
+	@echo "  make lint             Lint code (Python, YAML{% if cookiecutter.use_docker %}, Docker{% endif %}, Markdown)"
 	@echo "  make security         Security check with bandit"
 	@echo "  make typecheck        Type check (mypy + pyright + ty + pyrefly)"
 	@echo "  make test             Run tests"

@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "{{ cookiecutter.project_slug }}"
 version = "0.1.0"
-description = "{{ cookiecutter.project_name }}"
+description = "{{ cookiecutter.project_description }}"
 authors = [{name = "{{ cookiecutter.author_name }}", email = "{{ cookiecutter.author_email }}"}]
 readme = "README.md"
 license = {text = "{{ cookiecutter.license }}"}
@@ -20,8 +20,10 @@ classifiers = [
 ]
 
 dependencies = [
+{%- if cookiecutter.use_pydantic %}
     "pydantic~=2.12",
     "pydantic-settings~=2.13",
+{%- endif %}
 {%- if cookiecutter.use_fastapi %}
     "fastapi[standard]~=0.135",
     "uvicorn~=0.43",
@@ -102,122 +104,7 @@ managed = true
 [tool.bandit]
 exclude_dirs = [".eggs", ".git", ".hg", ".mypy_cache", ".tox", "venv", ".venv", "build", "dist"]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-asyncio_mode = "auto"
-asyncio_default_fixture_loop_scope = "function"
-xfail_strict = true
-addopts = [
-    "--strict-markers",
-    "--tb=short",
-    "--cov={{ cookiecutter.package_name }}",
-    "--cov-report=term-missing:skip-covered",
-    "--cov-report=xml",
-]
-markers = [
-    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
-    "integration: marks tests as integration tests",
-    "unit: marks tests as unit tests",
-    "memory: marks tests that check memory usage",
-    "benchmark: marks performance benchmark tests",
-]
-
-# ==============================================================================
-# ty - Astral's fast type checker (experimental)
-# https://docs.astral.sh/ty/
-# ==============================================================================
-[tool.ty.environment]
-python-version = "{{ cookiecutter.python_version }}"
-python = ".venv"
-root = ["{{ cookiecutter.package_name }}", "tests"]
-
-[tool.ty.src]
-include = ["{{ cookiecutter.package_name }}", "tests"]
-exclude = [
-    ".venv/**",
-    ".git/**",
-    "__pycache__/**",
-    "*.pyc",
-    ".mypy_cache/**",
-    ".pytest_cache/**",
-    ".ruff_cache/**",
-    "dist/**",
-    "build/**",
-]
-
-[tool.ty.rules]
-unresolved-reference = "error"
-possibly-unresolved-reference = "error"
-invalid-assignment = "error"
-invalid-argument-type = "error"
-invalid-return-type = "error"
-call-non-callable = "error"
-missing-argument = "error"
-too-many-positional-arguments = "error"
-unknown-argument = "error"
-unsupported-operator = "error"
-invalid-type-form = "error"
-invalid-type-variable-constraints = "error"
-invalid-legacy-type-variable = "error"
-
-[tool.ty.terminal]
-output-format = "full"
-error-on-warning = false
-
-[[tool.ty.overrides]]
-include = ["tests/**", "**/test_*.py", "**/*_test.py"]
-
-[tool.ty.overrides.rules]
-possibly-unresolved-reference = "warn"
-unused-ignore-comment = "warn"
-
-# ==============================================================================
-# Pyrefly - Facebook's fast type checker
-# https://pyrefly.org/en/docs/configuration/
-# ==============================================================================
-[tool.pyrefly]
-project-includes = ["{{ cookiecutter.package_name }}", "tests"]
-project-excludes = [
-    ".venv/**",
-    ".git/**",
-    "__pycache__/**",
-    "dist/**",
-    "build/**",
-]
-python-version = "{{ cookiecutter.python_version }}"
-check-unannotated-defs = true
-min-severity = "error"
-output-format = "full-text"
-
-[tool.pyrefly.errors]
-# Core type errors
-bad-assignment = true
-bad-return = true
-bad-argument-type = true
-bad-argument-count = true
-bad-keyword-argument = true
-missing-argument = true
-unexpected-keyword = true
-unexpected-positional-argument = true
-not-callable = true
-# Type system
-invalid-annotation = true
-invalid-type-alias = true
-invalid-type-var = true
-invalid-inheritance = true
-bad-override = true
-bad-specialization = true
-# Import & name resolution
-missing-import = true
-unbound-name = true
-unknown-name = true
-missing-attribute = true
-missing-module-attribute = true
-# Other strictness
-bad-unpacking = true
-bad-instantiation = true
-bad-index = true
-not-iterable = true
-unsupported-operation = true
-redundant-cast = true
-unused-ignore = true
+# Note: pytest, ty, and pyrefly configurations are in separate files:
+# - pytest.ini
+# - ty.toml
+# - pyrefly.toml

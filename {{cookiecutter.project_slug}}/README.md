@@ -1,6 +1,6 @@
 # {{ cookiecutter.project_name }}
 
-{{ cookiecutter.project_name }} is a Python project.
+{{ cookiecutter.project_description }}.
 
 ## Quick Start
 

@@ -1,5 +1,5 @@
-ARG BUILDER_IMAGE=astral/uv:0.9.2-bookworm
-ARG RUNNER_IMAGE=debian:12.12-slim
+ARG BUILDER_IMAGE=astral/uv:bookworm
+ARG RUNNER_IMAGE=debian:bookworm-slim
 
 # hadolint ignore=DL3006
 FROM ${BUILDER_IMAGE} AS builder
@@ -40,14 +40,13 @@ USER nonroot
 
 WORKDIR /app
 
-EXPOSE 8000
+EXPOSE {{ cookiecutter.server_port }}
 {% if cookiecutter.use_fastapi %}
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"]
-{% endif %}
-{% if cookiecutter.use_fastapi  %}
-CMD ["uvicorn", "{{ cookiecutter.package_name }}.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:{{ cookiecutter.server_port }}/')"]
+
+CMD ["uvicorn", "{{ cookiecutter.package_name }}.main:app", "--host", "0.0.0.0", "--port", "{{ cookiecutter.server_port }}"]
 {% else %}
 CMD ["python", "-m", "{{ cookiecutter.package_name }}"]
 {% endif %}

@@ -1,0 +1,49 @@
+# ==============================================================================
+# Pyrefly - Facebook's fast type checker
+# https://pyrefly.org/en/docs/configuration/
+# ==============================================================================
+project-includes = ["{{ cookiecutter.package_name }}", "tests"]
+project-excludes = [
+    ".venv/**",
+    ".git/**",
+    "__pycache__/**",
+    "dist/**",
+    "build/**",
+]
+python-version = "{{ cookiecutter.python_version }}"
+check-unannotated-defs = true
+min-severity = "error"
+output-format = "full-text"
+
+[errors]
+# Core type errors
+bad-assignment = true
+bad-return = true
+bad-argument-type = true
+bad-argument-count = true
+bad-keyword-argument = true
+missing-argument = true
+unexpected-keyword = true
+unexpected-positional-argument = true
+not-callable = true
+# Type system
+invalid-annotation = true
+invalid-type-alias = true
+invalid-type-var = true
+invalid-inheritance = true
+bad-override = true
+bad-specialization = true
+# Import & name resolution
+missing-import = true
+unbound-name = true
+unknown-name = true
+missing-attribute = true
+missing-module-attribute = true
+# Other strictness
+bad-unpacking = true
+bad-instantiation = true
+bad-index = true
+not-iterable = true
+unsupported-operation = true
+redundant-cast = true
+unused-ignore = true

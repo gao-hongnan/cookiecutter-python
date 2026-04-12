@@ -18,7 +18,7 @@ repos:
       - id: yamllint
         name: Lint YAML files
         args: [--strict]
-{% if cookiecutter.use_docker  %}
+{% if cookiecutter.use_docker %}
 
   - repo: local
     hooks:
@@ -38,41 +38,14 @@ repos:
         args: ["--fix", "--config", ".markdownlint.json"]
         exclude: ^(node_modules|\.venv|\.claude|.*/_build)/
 
-  - repo: local
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.3
     hooks:
-      - id: security-bandit
-        name: Security Check (Bandit)
-        entry: make security
-        language: system
-        types: [python]
-        pass_filenames: false
-
-  - repo: local
-    hooks:
-      - id: lint-ruff
-        name: Lint and Format Check (Ruff)
-        entry: make lint
-        language: system
-        types: [python]
-        pass_filenames: false
-
-  - repo: local
-    hooks:
-      - id: type-mypy
-        name: Type Check (MyPy)
-        entry: make typecheck
-        language: system
-        types: [python]
-        pass_filenames: false
-
-  - repo: local
-    hooks:
-      - id: unit-test
-        name: Unit Tests (PyTest)
-        entry: make test
-        language: system
-        types: [python]
-        pass_filenames: false
+      - id: ruff
+        name: Ruff Lint
+        args: [--fix]
+      - id: ruff-format
+        name: Ruff Format
 
   - repo: https://github.com/commitizen-tools/commitizen
     rev: v4.8.3
