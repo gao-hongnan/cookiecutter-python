@@ -1,6 +1,7 @@
 """Placeholder tests demonstrating the test infrastructure."""
 
 import pytest
+from pytest_mock import MockFixture
 
 
 def test_import_package() -> None:
@@ -45,7 +46,7 @@ async def async_add(a: int, b: int) -> int:
     return a + b
 
 
-def test_with_mock(mocker: pytest.MockFixture) -> None:
+def test_with_mock(mocker: MockFixture) -> None:
     """Demonstrate using pytest-mock.
 
     Args:
