@@ -2,8 +2,6 @@
 
 import pytest
 
-from conftest import sample_fixture
-
 
 def test_import_package() -> None:
     """Verify the package can be imported."""
@@ -58,7 +56,7 @@ def test_with_mock(mocker: pytest.MockFixture) -> None:
     mock_func.assert_called_once()
 
 
-@pytest.mark.parametrize("input,expected", [(1, 1), (2, 4), (3, 9)])
+@pytest.mark.parametrize(("input", "expected"), [(1, 1), (2, 4), (3, 9)])
 def test_parametrized(input: int, expected: int) -> None:
     """Demonstrate parametrized tests.
 
