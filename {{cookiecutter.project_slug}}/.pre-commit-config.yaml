@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
       - id: check-ast
       - id: check-builtin-literals
@@ -13,7 +13,7 @@ repos:
       - id: check-merge-conflict
 
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.37.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
         name: Lint YAML files
@@ -25,13 +25,13 @@ repos:
       - id: hadolint-docker
         name: Lint Dockerfiles
         language: docker_image
-        entry: hadolint/hadolint:v2.12.0 hadolint
+        entry: hadolint/hadolint:v2.14.0 hadolint
         files: (^|/)Dockerfile(\..+)?$
         pass_filenames: true
 {% endif %}
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.43.0
+    rev: v0.48.0
     hooks:
       - id: markdownlint
         name: Lint Markdown files
@@ -39,7 +39,7 @@ repos:
         exclude: ^(node_modules|\.venv|\.claude|.*/_build)/
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.9.3
+    rev: v0.15.11
     hooks:
       - id: ruff
         name: Ruff Lint
@@ -48,12 +48,12 @@ repos:
         name: Ruff Format
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.8.3
+    rev: v4.13.9
     hooks:
       - id: commitizen
         stages: [commit-msg]
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.7.19
+    rev: 0.11.7
     hooks:
       - id: uv-lock

@@ -20,4 +20,4 @@ async def root() -> JSONResponse:
 async def health() -> JSONResponse:
     """Health check endpoint."""
     return JSONResponse({"status": "healthy"})
-{% endif %}
+{%- endif %}

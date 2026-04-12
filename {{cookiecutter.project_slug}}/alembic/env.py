@@ -3,14 +3,15 @@
 import asyncio
 from logging.config import fileConfig
 
-from alembic import context
 from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
+from sqlmodel import SQLModel
+
+from alembic import context
 
 # Import your models here
 # from {{ cookiecutter.package_name }}.models import Base
-from sqlmodel import SQLModel
 
 # this is the Alembic Config object
 config = context.config
@@ -65,8 +66,9 @@ def do_run_migrations(connection: Connection) -> None:
 
 async def run_async_migrations() -> None:
     """Run migrations in async mode."""
-    configuration = config.get_section(config.config_ini_section)
-    configuration["sqlalchemy.url"] = DATABASE_URL
+    configuration = config.get_section(config.config_ini_section) or {}
+    if DATABASE_URL is not None:
+        configuration["sqlalchemy.url"] = DATABASE_URL
 
     connectable = async_engine_from_config(
         configuration,
@@ -93,4 +95,4 @@ if context.is_offline_mode():
     run_migrations_offline()
 else:
     run_migrations_online()
-{% endif %}
+{%- endif %}

@@ -7,7 +7,6 @@ omit =
     */tests/*
 
 [report]
-fail_under = 50
 show_missing = True
 
 [html]

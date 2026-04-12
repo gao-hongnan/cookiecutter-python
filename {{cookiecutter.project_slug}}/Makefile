@@ -25,7 +25,7 @@ lint:
 	@uv run yamllint .
 {% if cookiecutter.use_docker %}
 	@echo "Running Dockerfile linting..."
-	@docker run --rm -v "$(CURDIR):/workdir" -w /workdir hadolint/hadolint:v2.12.0 \
+	@docker run --rm -v "$(CURDIR):/workdir" -w /workdir hadolint/hadolint:v2.14.0 \
 		hadolint --config .hadolint.yaml environments/container/Dockerfile
 {% endif %}
 	@echo "Running Markdown linting..."

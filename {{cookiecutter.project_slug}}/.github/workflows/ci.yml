@@ -25,7 +25,7 @@ jobs:
         python-version: ["{{ cookiecutter.python_version }}"]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
         with:
@@ -33,7 +33,7 @@ jobs:
 
       - run: npm install -g markdownlint-cli
 
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@v8
         with:
           version: "latest"
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
@@ -54,7 +54,7 @@ jobs:
 
       - name: Archive coverage reports
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: coverage-report-{% raw %}${{ matrix.os }}-${{ matrix.python-version }}{% endraw %}
           path: |

@@ -57,12 +57,12 @@ def test_with_mock(mocker: MockFixture) -> None:
     mock_func.assert_called_once()
 
 
-@pytest.mark.parametrize(("input", "expected"), [(1, 1), (2, 4), (3, 9)])
-def test_parametrized(input: int, expected: int) -> None:
+@pytest.mark.parametrize(("value", "expected"), [(1, 1), (2, 4), (3, 9)])
+def test_parametrized(value: int, expected: int) -> None:
     """Demonstrate parametrized tests.
 
     Args:
-        input: Input value
+        value: Input value
         expected: Expected output
     """
-    assert input * input == expected
+    assert value * value == expected

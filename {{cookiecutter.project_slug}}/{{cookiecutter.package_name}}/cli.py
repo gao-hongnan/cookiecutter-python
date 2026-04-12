@@ -1,7 +1,8 @@
 {% if cookiecutter.use_cli %}"""CLI interface for {{ cookiecutter.project_name }}."""
 
-import typer
 from typing import Annotated
+
+import typer
 
 app = typer.Typer(
     name="{{ cookiecutter.project_slug }}",
@@ -30,4 +31,4 @@ def version() -> None:
 
 if __name__ == "__main__":
     app()
-{% endif %}
+{%- endif %}
