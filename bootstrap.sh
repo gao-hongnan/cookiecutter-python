@@ -25,9 +25,9 @@ fi
 if git rev-parse --is-inside-work-tree &>/dev/null; then
     # Existing repo: generate to temp, copy in
     echo "Detected existing git repo. Scaffolding into: ${CURRENT_DIR}"
-    TMPDIR="$(mktemp -d)"
-    cookiecutter "$TEMPLATE_DIR" -o "$TMPDIR"
-    GENERATED="$(find "$TMPDIR" -mindepth 1 -maxdepth 1 -type d | head -1)"
+    TEMP_DIR="$(mktemp -d)"
+    cookiecutter "$TEMPLATE_DIR" -o "$TEMP_DIR"
+    GENERATED="$(find "$TEMP_DIR" -mindepth 1 -maxdepth 1 -type d | head -1)"
 
     if [ -z "$GENERATED" ]; then
         echo "Error: cookiecutter generated nothing" >&2
@@ -43,7 +43,7 @@ if git rev-parse --is-inside-work-tree &>/dev/null; then
         "$GENERATED"/ ./
 
     # Clean up temp
-    rm -rf "$TMPDIR"
+    rm -rf "$TEMP_DIR"
 
     # Install deps (creates fresh .venv in the right place)
     make install
