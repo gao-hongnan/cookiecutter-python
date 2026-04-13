@@ -14,7 +14,7 @@ make ci
 ```bash
 make format    # Format code
 make lint      # Lint code
-make typecheck # Type check (mypy + pyright + ty)
+make typecheck # Type check (mypy + pyright + ty + pyrefly)
 make test      # Run tests
 make ci        # Full CI pipeline
 make clean     # Clean cache files
@@ -31,6 +31,8 @@ make serve     # Start production server
 {%- if cookiecutter.use_jupyter_book %}
 
 ## Documentation
+
+Requires [Node.js](https://nodejs.org/) v20+ (Jupyter Book v2 uses the mystmd engine).
 
 ```bash
 make docs-build  # Build Jupyter Book documentation

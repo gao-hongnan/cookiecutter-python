@@ -19,10 +19,12 @@ make lint
 make security
 
 # Type checking
-make typecheck                       # mypy + pyright + ty
+make typecheck                       # mypy + pyright + ty + pyrefly
 
 # Tests
 make test                            # run pytest
+make test-unit                       # run unit tests only
+make test-integration                # run integration tests only
 make ci                              # lint + typecheck + test
 
 # Clean
@@ -40,6 +42,8 @@ make dev                             # uvicorn with reload on port 8000
 
 ## Documentation
 
+Requires Node.js v20+ (mystmd engine).
+
 ```bash
 make docs-build                      # build Jupyter Book
 make docs-serve                      # local dev server (live reload)
@@ -51,5 +55,5 @@ make docs-serve                      # local dev server (live reload)
 - **Ruff**: line-length 120 (`.ruff.toml`), target py{{ cookiecutter.python_version }}, double quotes
 - **Type checking**: strict mode on all four checkers (mypy, pyright, ty, pyrefly)
 - **Pre-commit**: ruff, bandit, mypy, yamllint, markdownlint, commitizen
-- **Testing**: pytest-asyncio (auto mode), pytest-cov
+- **Testing**: pytest-asyncio (auto mode), pytest-cov, pytest-memray, pytest-benchmark, hypothesis, testcontainers
 - **Commit style**: conventional commits via commitizen

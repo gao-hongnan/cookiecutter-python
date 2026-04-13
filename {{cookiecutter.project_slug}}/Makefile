@@ -7,7 +7,7 @@ SOURCES := $(PACKAGE_NAME) tests
 # Development Commands
 # ==================================================================
 
-.PHONY: install format lint security typecheck test ci clean help
+.PHONY: install format lint security typecheck test test-unit test-integration ci clean help
 
 install:
 	uv sync --all-groups
@@ -45,6 +45,12 @@ typecheck:
 test:
 	uv run pytest tests
 
+test-unit:
+	uv run pytest tests -m "unit"
+
+test-integration:
+	uv run pytest tests -m "integration"
+
 ci: lint typecheck test
 	@echo "All CI checks passed!"
 
@@ -54,6 +60,7 @@ clean:
 	find . -type d -name .pytest_cache -exec rm -rf {} + 2>/dev/null || true
 	find . -type d -name .ruff_cache -exec rm -rf {} + 2>/dev/null || true
 	rm -rf htmlcov/ .coverage coverage.xml
+	rm -rf .memray/ .benchmarks/ .hypothesis/
 {%- if cookiecutter.use_jupyter_book %}
 	rm -rf playbook/_build/
 {%- endif %}
@@ -92,10 +99,10 @@ migrate:
 .PHONY: docs-build docs-serve docs-clean
 
 docs-build:
-	uv run jupyter-book build playbook/
+	cd playbook && uv run jupyter-book build --html
 
 docs-serve:
-	uv run jupyter-book start playbook/
+	cd playbook && uv run jupyter-book start
 
 docs-clean:
 	rm -rf playbook/_build/
@@ -115,6 +122,8 @@ help:
 	@echo "  make security         Security check with bandit"
 	@echo "  make typecheck        Type check (mypy + pyright + ty + pyrefly)"
 	@echo "  make test             Run tests"
+	@echo "  make test-unit        Run unit tests only"
+	@echo "  make test-integration Run integration tests only"
 	@echo "  make ci               Full CI pipeline"
 	@echo "  make clean            Clean cache files"
 {% if cookiecutter.use_fastapi  %}

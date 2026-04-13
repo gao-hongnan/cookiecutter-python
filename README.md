@@ -134,3 +134,4 @@ If any step fails, a warning is printed — run `make install` manually.
 - Python 3.13+
 - [uv](https://docs.astral.sh/uv/) (installed automatically by bootstrap)
 - git
+- [Node.js](https://nodejs.org/) v20+ (only if `use_jupyter_book` is enabled)
