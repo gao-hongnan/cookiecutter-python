@@ -10,5 +10,6 @@
     "use_fastapi": false,
     "use_docker": false,
     "use_database": false,
-    "use_cli": false
+    "use_cli": false,
+    "use_jupyter_book": false
 }

@@ -53,6 +53,7 @@ All three auto-detect:
 | `use_docker`      | `false`              | Dockerfile, .env.template, hadolint             |
 | `use_database`    | `false`              | SQLAlchemy + Alembic + asyncpg, `make migrate`  |
 | `use_cli`         | `false`              | Typer + Rich, `[project.scripts]` entry point   |
+| `use_jupyter_book`| `false`              | Jupyter Book v2 docs, `make docs-build`/`serve` |
 
 ### Name fields explained
 
@@ -87,7 +88,10 @@ them at the prompt if you want something different.
 │   ├── container/Dockerfile
 │   └── environment/.env.template
 ├── scripts/.gitkeep
-├── playbook/.gitkeep
+├── playbook/                      (.gitkeep, or Jupyter Book if use_jupyter_book)
+│   ├── myst.yml                   (only if use_jupyter_book)
+│   ├── index.md                   (only if use_jupyter_book)
+│   └── getting-started.md         (only if use_jupyter_book)
 ├── tests/
 │   ├── conftest.py
 │   └── test_placeholder.py

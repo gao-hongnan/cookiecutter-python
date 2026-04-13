@@ -62,11 +62,20 @@ test = [
     "pytest-xdist~=3.8",
     "pytest-cov~=7.1",
 ]
+{% if cookiecutter.use_jupyter_book %}
+
+docs = [
+    "jupyter-book~=2.1",
+]
+{% endif %}
 
 dev = [
     {include-group = "lint"},
     {include-group = "type"},
     {include-group = "test"},
+{%- if cookiecutter.use_jupyter_book %}
+    {include-group = "docs"},
+{%- endif %}
 ]
 
 {% if cookiecutter.use_cli  %}

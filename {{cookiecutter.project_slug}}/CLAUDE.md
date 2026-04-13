@@ -36,6 +36,15 @@ make clean                           # remove cache files
 make dev                             # uvicorn with reload on port 8000
 ```
 {%- endif %}
+{%- if cookiecutter.use_jupyter_book %}
+
+## Documentation
+
+```bash
+make docs-build                      # build Jupyter Book
+make docs-serve                      # local dev server (live reload)
+```
+{%- endif %}
 
 ## Code Quality
 

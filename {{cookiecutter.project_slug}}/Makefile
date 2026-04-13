@@ -54,6 +54,9 @@ clean:
 	find . -type d -name .pytest_cache -exec rm -rf {} + 2>/dev/null || true
 	find . -type d -name .ruff_cache -exec rm -rf {} + 2>/dev/null || true
 	rm -rf htmlcov/ .coverage coverage.xml
+{%- if cookiecutter.use_jupyter_book %}
+	rm -rf playbook/_build/
+{%- endif %}
 	@echo "Cleaned cache files!"
 {% if cookiecutter.use_fastapi  %}
 
@@ -79,6 +82,24 @@ serve:
 
 migrate:
 	uv run alembic upgrade head
+{% endif %}
+{% if cookiecutter.use_jupyter_book  %}
+
+# ==================================================================
+# Documentation Commands
+# ==================================================================
+
+.PHONY: docs-build docs-serve docs-clean
+
+docs-build:
+	uv run jupyter-book build playbook/
+
+docs-serve:
+	uv run jupyter-book start playbook/
+
+docs-clean:
+	rm -rf playbook/_build/
+	@echo "Cleaned documentation build files!"
 {% endif %}
 
 # ==================================================================
@@ -106,4 +127,11 @@ help:
 	@echo ""
 	@echo "Database Commands:"
 	@echo "  make migrate          Run Alembic migrations"
+{% endif %}
+{% if cookiecutter.use_jupyter_book  %}
+	@echo ""
+	@echo "Documentation Commands:"
+	@echo "  make docs-build       Build Jupyter Book documentation"
+	@echo "  make docs-serve       Start local docs server (live reload)"
+	@echo "  make docs-clean       Clean docs build directory"
 {% endif %}

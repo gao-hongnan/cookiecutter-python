@@ -28,6 +28,16 @@ make dev       # Start dev server (with reload)
 make serve     # Start production server
 ```
 {%- endif %}
+{%- if cookiecutter.use_jupyter_book %}
+
+## Documentation
+
+```bash
+make docs-build  # Build Jupyter Book documentation
+make docs-serve  # Start local docs server (live reload)
+make docs-clean  # Clean docs build directory
+```
+{%- endif %}
 
 ## License
 

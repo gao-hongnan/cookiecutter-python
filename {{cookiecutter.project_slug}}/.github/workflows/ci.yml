@@ -45,6 +45,12 @@ jobs:
 
       - name: Run CI Pipeline
         run: make ci
+{%- if cookiecutter.use_jupyter_book %}
+
+      - name: Build documentation
+        run: make docs-build
+
+{%- endif %}
 
       - name: Archive coverage reports
         if: always()

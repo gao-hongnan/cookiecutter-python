@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -30,6 +31,15 @@ def remove_docker_files() -> None:
                 d.rmdir()  # Only removes empty dirs
             except OSError:
                 pass
+
+
+def remove_jupyter_book_files() -> None:
+    """Replace Jupyter Book files with empty .gitkeep when use_jupyter_book is false."""
+    playbook_dir = Path("playbook")
+    if playbook_dir.exists() and playbook_dir.is_dir():
+        shutil.rmtree(playbook_dir)
+        playbook_dir.mkdir()
+        (playbook_dir / ".gitkeep").touch()
 
 
 def init_git() -> None:
@@ -61,9 +71,13 @@ def init_uv_and_precommit() -> None:
 
 def main() -> None:
     use_docker = "{{ cookiecutter.use_docker }}"
+    use_jupyter_book = "{{ cookiecutter.use_jupyter_book }}"
 
     if use_docker != "True":
         remove_docker_files()
+
+    if use_jupyter_book != "True":
+        remove_jupyter_book_files()
 
     init_git()
     init_uv_and_precommit()
