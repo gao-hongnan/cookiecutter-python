@@ -1,7 +1,17 @@
 name: Task
 description: A piece of work that isn't a bug report or feature request (refactor, chore, test, docs, infra)
+title: "<type>(<scope>): <short imperative summary>"
 labels: ["task"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        **Title convention** — this repo uses [Conventional Commits](https://www.conventionalcommits.org/) for commits, issues, and PRs.
+        Pick the `<type>` that matches the **Kind** dropdown below:
+        `refactor` · `chore` · `test` · `docs` · `ci` · `build` · `perf`.
+        Example: `refactor(core): split main module into submodules`.
+        Scope is optional; omit the parentheses if there isn't a meaningful one.
+
   - type: checkboxes
     id: preflight
     attributes:

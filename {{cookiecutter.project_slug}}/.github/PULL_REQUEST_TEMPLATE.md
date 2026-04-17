@@ -1,3 +1,29 @@
+<!--
+PR title convention — Conventional Commits.
+Format:  <type>(<scope>): <short imperative summary>
+
+Allowed <type> values:
+  feat      — a new user-facing feature
+  fix       — a bug fix
+  docs      — documentation-only change
+  style     — formatting / whitespace (no code behavior change)
+  refactor  — code change that is neither a fix nor a feature
+  perf      — performance improvement
+  test      — add or fix tests
+  build     — build system / dependency change
+  ci        — CI / pipeline change
+  chore     — anything else (tooling, meta)
+  revert    — reverts a previous commit
+
+Examples:
+  feat({{ cookiecutter.package_name }}): add new capability
+  fix(cli): handle empty config path
+  docs(readme): clarify setup for new contributors
+
+Add `!` after the type/scope for a breaking change, e.g. `feat(api)!: drop legacy endpoint`.
+Scope is optional; omit the parentheses if there isn't a meaningful one.
+-->
+
 ## Summary
 
 <!-- Brief description of what changed and why -->

@@ -1,7 +1,15 @@
 name: Feature Request
 description: Suggest a new feature or enhancement
+title: "feat(<scope>): <short imperative summary>"
 labels: ["enhancement"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        **Title convention** — this repo uses [Conventional Commits](https://www.conventionalcommits.org/) for commits, issues, and PRs.
+        Use `feat(<scope>): <subject>` for new features. Example: `feat({{ cookiecutter.package_name }}): add new capability`.
+        Scope is optional; omit the parentheses if there isn't a meaningful one.
+
   - type: checkboxes
     id: preflight
     attributes:
