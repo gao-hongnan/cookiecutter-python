@@ -52,7 +52,7 @@ lint: .uv
 		hadolint --config .hadolint.yaml environments/container/Dockerfile
 {% endif %}
 	@echo "Running Markdown linting..."
-	@npx markdownlint "**/*.md" --config .markdownlint.json --ignore node_modules --ignore .venv
+	@npx markdownlint "**/*.md" --config .markdownlint.json --ignore node_modules --ignore .venv --ignore "_build" --ignore "**/_build/**"
 	@echo "All linting checks passed!"
 
 .PHONY: security

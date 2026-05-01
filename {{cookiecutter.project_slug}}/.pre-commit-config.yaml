@@ -36,7 +36,7 @@ repos:
       - id: markdownlint
         name: Lint Markdown files
         args: ["--fix", "--config", ".markdownlint.json"]
-        exclude: ^(node_modules|\.venv|\.claude|.*/_build)/
+        exclude: ^(node_modules|\.venv|\.claude|(.*/)?_build)/
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.11

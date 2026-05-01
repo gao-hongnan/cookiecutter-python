@@ -8,6 +8,7 @@
 
 # Documentation builds
 playbook/_build/
+_build/
 __pycache__/
 *.py[cod]
 *$py.class
