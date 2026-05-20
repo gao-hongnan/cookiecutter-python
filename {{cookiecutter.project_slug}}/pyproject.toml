@@ -105,6 +105,6 @@ managed = true
 exclude_dirs = [".eggs", ".git", ".hg", ".mypy_cache", ".tox", "venv", ".venv", "build", "dist"]
 
 # Note: pytest, ty, and pyrefly configurations are in separate files:
-# - pytest.ini
+# - .pytest.ini
 # - ty.toml
 # - pyrefly.toml

@@ -6,6 +6,7 @@ on:
 
 env:
   UV_FROZEN: true
+  UV_SYSTEM_CERTS: "true"
   FORCE_COLOR: 1
 
 jobs:
