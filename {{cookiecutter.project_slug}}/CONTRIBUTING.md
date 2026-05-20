@@ -67,6 +67,30 @@ make test-integration   # Integration tests only
 - **Testing**: pytest with asyncio support, coverage reporting
 - **Pre-commit**: Runs format, lint, and commit message checks
 
+## Releasing
+
+1. Ensure `main` is clean and all CI passes.
+2. Run the release script:
+   ```bash
+   make release VERSION=1.2.3
+   ```
+   This will:
+   - Generate/update `CHANGELOG.md` from conventional commits since the last tag
+   - Bump `version` in `pyproject.toml`
+   - Commit both files as `release: v1.2.3`
+   - Create annotated git tag `v1.2.3`
+
+3. Push the commit and tag:
+   ```bash
+   git push && git push --tags
+   ```
+
+4. GitHub Actions (`pypi.yml`) then automatically:
+   - Runs the full CI pipeline
+   - Builds the package with `uv build`
+   - Publishes to PyPI with `uv publish` (OIDC — no API secrets needed)
+   - Creates a GitHub Release with release notes extracted from `CHANGELOG.md`
+
 ## Questions?
 
 Feel free to open an issue for questions or suggestions!

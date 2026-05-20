@@ -101,6 +101,12 @@ packages = ["{{ cookiecutter.package_name }}"]
 [tool.uv]
 managed = true
 
+[tool.commitizen]
+name = "cz_conventional_commits"
+version_provider = "pep621"
+tag_format = "v$version"
+changelog_incremental = true
+
 [tool.bandit]
 exclude_dirs = [".eggs", ".git", ".hg", ".mypy_cache", ".tox", "venv", ".venv", "build", "dist"]
 
