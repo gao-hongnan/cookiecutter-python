@@ -14,8 +14,10 @@ def test_import_package() -> None:
 def test_with_fixture(sample_fixture: dict[str, str]) -> None:
     """Demonstrate using a fixture from conftest.py.
 
-    Args:
-        sample_fixture: Fixture from conftest.py
+    Parameters
+    ----------
+    sample_fixture : dict[str, str]
+        Fixture from conftest.py.
     """
     assert sample_fixture["key"] == "value"
 
@@ -36,12 +38,17 @@ async def test_async_example() -> None:
 async def async_add(a: int, b: int) -> int:
     """Simple async function for testing.
 
-    Args:
-        a: First number
-        b: Second number
+    Parameters
+    ----------
+    a : int
+        First number.
+    b : int
+        Second number.
 
-    Returns:
-        Sum of a and b
+    Returns
+    -------
+    int
+        Sum of a and b.
     """
     return a + b
 
@@ -49,8 +56,10 @@ async def async_add(a: int, b: int) -> int:
 def test_with_mock(mocker: MockFixture) -> None:
     """Demonstrate using pytest-mock.
 
-    Args:
-        mocker: Pytest-mock fixture
+    Parameters
+    ----------
+    mocker : MockFixture
+        Pytest-mock fixture.
     """
     mock_func = mocker.Mock(return_value=42)
     assert mock_func() == 42
@@ -61,8 +70,11 @@ def test_with_mock(mocker: MockFixture) -> None:
 def test_parametrized(value: int, expected: int) -> None:
     """Demonstrate parametrized tests.
 
-    Args:
-        value: Input value
-        expected: Expected output
+    Parameters
+    ----------
+    value : int
+        Input value.
+    expected : int
+        Expected output.
     """
     assert value * value == expected

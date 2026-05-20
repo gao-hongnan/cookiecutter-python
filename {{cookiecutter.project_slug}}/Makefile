@@ -89,10 +89,13 @@ test-integration: .uv
 
 .PHONY: test-cov
 test-cov: .uv
-	uv run coverage run -m pytest tests $(PYTEST_ARGS)
-	uv run coverage html -d htmlcov
-	uv run coverage xml -o coverage.xml
-	uv run coverage report -m --fail-under=$(COVERAGE_MIN)
+	uv run pytest tests \
+		--cov=$(PACKAGE_NAME) \
+		--cov-report=term-missing:skip-covered \
+		--cov-report=xml \
+		--cov-report=html:htmlcov \
+		--cov-fail-under=$(COVERAGE_MIN) \
+		$(PYTEST_ARGS)
 
 # ==================================================================
 # CI Pipeline
