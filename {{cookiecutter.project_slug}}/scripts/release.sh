@@ -48,6 +48,15 @@ while IFS= read -r f; do
 	CHANGED+=("$f")
 done < <(git ls-files '*.py' | xargs grep -l '^__version__ = ' 2>/dev/null || true)
 
+if command -v cz >/dev/null 2>&1; then
+	CZ=cz
+else
+	CZ="uvx commitizen"
+fi
+echo "Updating CHANGELOG.md -> $TAG"
+$CZ changelog --incremental --unreleased-version "$TAG"
+CHANGED+=(CHANGELOG.md)
+
 rollback() {
 	echo "Rolling back version bump..."
 	git checkout HEAD -- "${CHANGED[@]}" 2>/dev/null || true

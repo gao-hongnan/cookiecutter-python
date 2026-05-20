@@ -37,8 +37,10 @@ async def init_db() -> None:
 async def get_session() -> AsyncGenerator[AsyncSession]:
     """Get database session.
 
-    Yields:
-        AsyncSession: Database session
+    Yields
+    ------
+    AsyncSession
+        Database session.
     """
     async with async_session_maker() as session:
         try:
@@ -55,8 +57,10 @@ async def get_session() -> AsyncGenerator[AsyncSession]:
 async def get_db_context() -> AsyncGenerator[AsyncSession]:
     """Get database session as context manager.
 
-    Yields:
-        AsyncSession: Database session
+    Yields
+    ------
+    AsyncSession
+        Database session.
     """
     async with async_session_maker() as session:
         try:

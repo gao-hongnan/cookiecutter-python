@@ -96,7 +96,7 @@ make docs-serve                      # local dev server (live reload)
     - Configuration in separate files: `.mypy.ini`, `ty.toml`, `pyrefly.toml`, `pyrightconfig.json`
 - **Pre-commit**: ruff, yamllint, markdownlint, commitizen (fast hooks only - full checks in CI)
 - **Testing**: pytest-asyncio (auto mode), pytest-cov, pytest-memray, pytest-benchmark, hypothesis, testcontainers
-    - Configuration in `pytest.ini`, coverage in `.coveragerc`
+    - Configuration in `.pytest.ini`, coverage in `.coveragerc`
 - **Commit style**: conventional commits via commitizen
 
 ## Type Checkers

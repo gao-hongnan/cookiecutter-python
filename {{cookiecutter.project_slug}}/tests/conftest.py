@@ -1,6 +1,6 @@
 """Pytest configuration and fixtures.
 
-Markers are defined in pytest.ini.
+Markers are defined in .pytest.ini.
 """
 
 from __future__ import annotations
@@ -12,8 +12,10 @@ import pytest
 def sample_fixture() -> dict[str, str]:
     """Example fixture for demonstration.
 
-    Returns:
-        Sample data dictionary
+    Returns
+    -------
+    dict[str, str]
+        Sample data dictionary.
     """
     return {"key": "value"}
 
