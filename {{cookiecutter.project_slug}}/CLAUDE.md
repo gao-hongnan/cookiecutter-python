@@ -32,7 +32,7 @@ make test-cov                        # tests + coverage  (COVERAGE_MIN=80 defaul
 
 # CI / release
 make ci                              # lint + security + typecheck + test-cov
-make release VERSION=1.2.3           # bump pyproject.toml + __version__, commit, tag v1.2.3
+make release VERSION=1.2.3           # bump pyproject.toml + __version__ + uv.lock, commit, tag v1.2.3
 
 # Utility
 make clean                           # remove cache files and build artifacts

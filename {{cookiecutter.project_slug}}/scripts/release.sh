@@ -72,8 +72,20 @@ for f in "${CHANGED[@]:1}"; do
 	"${SED_INPLACE[@]}" -E "s/^__version__ = \".*\"/__version__ = \"$VERSION\"/" "$f"
 done
 
+# Keep uv.lock in sync with the new project version. The lock records the root
+# package version, so a bump leaves it stale; the uv-lock pre-commit hook would
+# otherwise regenerate it mid-commit and abort the release. Use plain `uv lock`
+# (not --upgrade) so the release does not silently bump dependency pins.
+if [ -f uv.lock ] && command -v uv >/dev/null 2>&1; then
+	echo "Regenerating uv.lock -> $VERSION"
+	uv lock
+	if git ls-files --error-unmatch uv.lock >/dev/null 2>&1; then
+		CHANGED+=(uv.lock)
+	fi
+fi
+
 git add "${CHANGED[@]}"
-git commit -m "release: $TAG"
+git commit -m "chore(release): $TAG"
 git tag -a "$TAG" -m "Release $TAG"
 
 trap - ERR

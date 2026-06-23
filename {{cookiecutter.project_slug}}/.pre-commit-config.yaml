@@ -1,3 +1,5 @@
+default_install_hook_types: [pre-commit, commit-msg, pre-push]
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -57,3 +59,22 @@ repos:
     rev: 0.11.7
     hooks:
       - id: uv-lock
+
+  # Pre-push only — tests + type checkers are too slow for every commit
+  # (typecheck runs mypy + pyright + ty + pyrefly). Runs once before push,
+  # catching breakage before it leaves the machine. Bypass with
+  # `git push --no-verify` if you really need to push a WIP branch.
+  - repo: local
+    hooks:
+      - id: pytest
+        name: Run pytest suite
+        language: system
+        entry: make test
+        pass_filenames: false
+        stages: [pre-push]
+      - id: typecheck
+        name: Run type checkers (mypy + pyright + ty + pyrefly)
+        language: system
+        entry: make typecheck
+        pass_filenames: false
+        stages: [pre-push]

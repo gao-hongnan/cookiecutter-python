@@ -20,7 +20,6 @@ TAG ?= latest
 install: .uv
 	uv sync --frozen --all-groups
 	uv run pre-commit install
-	uv run pre-commit install --hook-type commit-msg
 
 .PHONY: sync
 sync: .uv
