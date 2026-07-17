@@ -14,5 +14,6 @@
     "use_docker": false,
     "use_database": false,
     "use_cli": false,
-    "use_jupyter_book": false
+    "use_jupyter_book": false,
+    "use_branch_rulesets": true
 }

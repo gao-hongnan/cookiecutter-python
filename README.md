@@ -39,21 +39,22 @@ All three auto-detect:
 
 ## Options
 
-| Variable          | Default              | Description                                     |
-| ----------------- | -------------------- | ----------------------------------------------- |
-| `project_name`    | `My Project`         | Human-readable display name                     |
-| `project_slug`    | auto                 | Repo/directory name (kebab-case)                |
-| `package_name`    | auto                 | Python import name (snake_case)                 |
-| `author_name`     | _prompts at runtime_ | Your name                                       |
-| `author_email`    | _prompts at runtime_ | Your email                                      |
-| `github_username` | _prompts at runtime_ | GitHub username for URLs                        |
-| `python_version`  | `3.13`               | Minimum Python version                          |
-| `license`         | `MIT`                | `MIT` or `Apache-2.0`                           |
-| `use_fastapi`     | `false`              | FastAPI + uvicorn deps, `make dev`/`make serve` |
-| `use_docker`      | `false`              | Dockerfile, .env.template, hadolint             |
-| `use_database`    | `false`              | SQLAlchemy + Alembic + asyncpg, `make migrate`  |
-| `use_cli`         | `false`              | Typer + Rich, `[project.scripts]` entry point   |
-| `use_jupyter_book`| `false`              | Jupyter Book v2 docs, `make docs-build`/`serve` |
+| Variable              | Default              | Description                                     |
+| --------------------- | -------------------- | ----------------------------------------------- |
+| `project_name`        | `My Project`         | Human-readable display name                     |
+| `project_slug`        | auto                 | Repo/directory name (kebab-case)                |
+| `package_name`        | auto                 | Python import name (snake_case)                 |
+| `author_name`         | _prompts at runtime_ | Your name                                       |
+| `author_email`        | _prompts at runtime_ | Your email                                      |
+| `github_username`     | _prompts at runtime_ | GitHub username for URLs                        |
+| `python_version`      | `3.13`               | Minimum Python version                          |
+| `license`             | `MIT`                | `MIT` or `Apache-2.0`                           |
+| `use_fastapi`         | `false`              | FastAPI + uvicorn deps, `make dev`/`make serve` |
+| `use_docker`          | `false`              | Dockerfile, .env.template, hadolint             |
+| `use_database`        | `false`              | SQLAlchemy + Alembic + asyncpg, `make migrate`  |
+| `use_cli`             | `false`              | Typer + Rich, `[project.scripts]` entry point   |
+| `use_jupyter_book`    | `false`              | Jupyter Book v2 docs, `make docs-build`/`serve` |
+| `use_branch_rulesets` | `true`               | Versioned branch rulesets (PR + CI gate)        |
 
 ### Name fields explained
 
@@ -76,12 +77,16 @@ them at the prompt if you want something different.
 - **Pre-commit hooks**: ruff, bandit, mypy, yamllint, markdownlint, commitizen
 - **GitHub Actions**: CI on push/PR + PyPI release on tags
 - **Issue/PR templates** for GitHub
+- **Branch rulesets** as versioned JSON: PR + passing CI required on the
+  default branch, force pushes and deletion blocked, applied with `gh api`
+  (see the generated `.github/rulesets/README.md`)
 
 ## File structure
 
 ```
 ├── .github/
 │   ├── workflows/ci.yml, pypi.yml
+│   ├── rulesets/                  (only if use_branch_rulesets)
 │   ├── ISSUE_TEMPLATE/bug.yaml, feature_request.yaml
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── environments/              (only if use_docker)

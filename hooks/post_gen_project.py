@@ -71,6 +71,13 @@ def remove_cli_files() -> None:
         cli_file.unlink()
 
 
+def remove_branch_ruleset_files() -> None:
+    """Remove GitHub branch ruleset files when use_branch_rulesets is false."""
+    rulesets_dir = Path(".github/rulesets")
+    if rulesets_dir.exists() and rulesets_dir.is_dir():
+        shutil.rmtree(rulesets_dir)
+
+
 def init_git() -> None:
     """Initialize git repository with initial commit."""
     try:
@@ -110,6 +117,7 @@ def main() -> None:
     use_database = "{{ cookiecutter.use_database }}"
     use_fastapi = "{{ cookiecutter.use_fastapi }}"
     use_cli = "{{ cookiecutter.use_cli }}"
+    use_branch_rulesets = "{{ cookiecutter.use_branch_rulesets }}"
 
     if use_docker.lower() != "true":
         remove_docker_files()
@@ -126,6 +134,9 @@ def main() -> None:
     if use_cli.lower() != "true":
         remove_cli_files()
 
+    if use_branch_rulesets.lower() != "true":
+        remove_branch_ruleset_files()
+
     init_git()
     init_uv_and_precommit()
 
@@ -133,7 +144,10 @@ def main() -> None:
     print("\nNext steps:")
     print("  1. cp .env.sample .env          # Configure environment variables")
     print("  2. cp .secret.sample .secrets  # Configure secrets")
-    print("  3. Run 'make ci' to verify everything works.\n")
+    print("  3. Run 'make ci' to verify everything works.")
+    if use_branch_rulesets.lower() == "true":
+        print("  4. After pushing to GitHub, apply branch rulesets: see .github/rulesets/README.md")
+    print()
 
 
 if __name__ == "__main__":
