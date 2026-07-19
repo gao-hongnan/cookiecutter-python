@@ -73,7 +73,7 @@ for f in "${CHANGED[@]:1}"; do
 done
 
 # Keep uv.lock in sync with the new project version. The lock records the root
-# package version, so a bump leaves it stale; the uv-lock pre-commit hook would
+# package version, so a bump leaves it stale; the uv-lock prek hook would
 # otherwise regenerate it mid-commit and abort the release. Use plain `uv lock`
 # (not --upgrade) so the release does not silently bump dependency pins.
 if [ -f uv.lock ] && command -v uv >/dev/null 2>&1; then

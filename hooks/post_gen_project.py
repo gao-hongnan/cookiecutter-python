@@ -94,21 +94,19 @@ def init_git() -> None:
         print("WARNING: git not found. Skipping git initialization.", file=sys.stderr)
 
 
-def init_uv_and_precommit() -> None:
-    """Install dependencies and pre-commit hooks."""
+def init_uv_and_prek() -> None:
+    """Install dependencies and git hooks (prek)."""
     try:
         subprocess.run(["uv", "sync", "--all-groups"], check=True)
     except (subprocess.CalledProcessError, FileNotFoundError):
         print("WARNING: uv sync failed. Run 'make install' manually.", file=sys.stderr)
 
     try:
-        subprocess.run(["uv", "run", "pre-commit", "install"], check=True)
-        subprocess.run(
-            ["uv", "run", "pre-commit", "install", "--hook-type", "commit-msg"],
-            check=True,
-        )
+        # A single `prek install` honours default_install_hook_types in
+        # .pre-commit-config.yaml (pre-commit, commit-msg, pre-push).
+        subprocess.run(["uv", "run", "prek", "install"], check=True)
     except (subprocess.CalledProcessError, FileNotFoundError):
-        print("WARNING: pre-commit install failed. Run 'make install' manually.", file=sys.stderr)
+        print("WARNING: prek install failed. Run 'make install' manually.", file=sys.stderr)
 
 
 def main() -> None:
@@ -138,7 +136,7 @@ def main() -> None:
         remove_branch_ruleset_files()
 
     init_git()
-    init_uv_and_precommit()
+    init_uv_and_prek()
 
     print(f"\nProject '{{ cookiecutter.project_name }}' created successfully!")
     print("\nNext steps:")

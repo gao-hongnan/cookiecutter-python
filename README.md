@@ -74,7 +74,8 @@ them at the prompt if you want something different.
 - **Ruff** linting + formatting (120 char line, comprehensive rules)
 - **Quadruple type checking**: mypy strict + pyright strict + ty + pyrefly
 - **pytest** with async support and coverage
-- **Pre-commit hooks**: ruff, bandit, mypy, yamllint, markdownlint, commitizen
+- **Security**: bandit static analysis + pip-audit dependency vulnerability scan (`make security`)
+- **Git hooks (prek)**: ruff, mypy, yamllint, markdownlint, commitizen
 - **GitHub Actions**: CI on push/PR + PyPI release on tags
 - **Issue/PR templates** for GitHub
 - **Branch rulesets** as versioned JSON: PR + passing CI required on the
@@ -130,7 +131,7 @@ For greenfield projects, the hook automatically runs:
 
 1. `git init` + initial commit
 2. `uv sync --all-groups`
-3. `pre-commit install` (pre-commit + commit-msg hooks)
+3. `prek install` (pre-commit, commit-msg + pre-push hooks)
 
 If any step fails, a warning is printed — run `make install` manually.
 

@@ -65,7 +65,7 @@ make test-integration   # Integration tests only
 - **Type checking**: Strict mode with 4 checkers (mypy, pyright, ty, pyrefly)
 - **Linting**: ruff with line length 120
 - **Testing**: pytest with asyncio support, coverage reporting
-- **Pre-commit**: Runs format, lint, and commit message checks
+- **Git hooks (prek)**: Runs format, lint, and commit message checks
 
 ## Releasing
 

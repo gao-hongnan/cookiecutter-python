@@ -11,7 +11,7 @@ code in this repository.
 
 ```bash
 # Install / dependency management
-make install                         # uv sync --frozen + pre-commit hooks
+make install                         # uv sync --frozen + prek hooks
 make sync                            # uv sync (relaxed, for local iteration)
 make lock                            # uv lock --upgrade
 
@@ -94,7 +94,8 @@ make docs-serve                      # local dev server (live reload)
 - **Ruff**: line-length 120 (`.ruff.toml`), target py{{ cookiecutter.python_version }}, double quotes
 - **Type checking**: strict mode on all four checkers (mypy, pyright, ty, pyrefly)
     - Configuration in separate files: `.mypy.ini`, `ty.toml`, `pyrefly.toml`, `pyrightconfig.json`
-- **Pre-commit**: ruff, yamllint, markdownlint, commitizen (fast hooks only - full checks in CI)
+- **Security**: `make security` runs bandit (static analysis) + pip-audit (dependency vulnerability scan); part of `make ci`
+- **Git hooks (prek)**: ruff, yamllint, markdownlint, commitizen (fast hooks only - full checks in CI)
 - **Testing**: pytest-asyncio (auto mode), pytest-cov, pytest-memray, pytest-benchmark, hypothesis, testcontainers
     - Configuration in `.pytest.ini`, coverage in `.coveragerc`
 - **Commit style**: conventional commits via commitizen

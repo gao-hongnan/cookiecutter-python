@@ -22,20 +22,20 @@ classifiers = [
 dependencies = [
 {%- if cookiecutter.use_pydantic %}
     "pydantic~=2.13",
-    "pydantic-settings~=2.13",
+    "pydantic-settings~=2.14",
 {%- endif %}
 {%- if cookiecutter.use_fastapi %}
-    "fastapi[standard]~=0.136",
-    "uvicorn~=0.44",
+    "fastapi[standard]~=0.139",
+    "uvicorn~=0.51",
 {%- endif %}
 {%- if cookiecutter.use_database %}
     "sqlalchemy~=2.0",
-    "sqlmodel~=0.0.38",
+    "sqlmodel~=0.0.39",
     "alembic~=1.18",
     "asyncpg~=0.31",
 {%- endif %}
 {%- if cookiecutter.use_cli %}
-    "typer~=0.24",
+    "typer~=0.27",
     "rich~=15.0",
 {%- endif %}
 ]
@@ -43,28 +43,29 @@ dependencies = [
 [dependency-groups]
 lint = [
     "bandit~=1.9",
-    "commitizen~=4.13",
-    "pre-commit~=4.5",
+    "commitizen~=4.16",
+    "pip-audit~=2.10",
+    "prek~=0.4.10",
     "ruff~=0.15",
     "yamllint~=1.38",
 ]
 
 type = [
-    "mypy~=1.20",
-    "pyright~=1.1.408",
-    "ty~=0.0.31",
-    "pyrefly~=0.61",
+    "mypy~=2.3",
+    "pyright~=1.1.411",
+    "ty~=0.0.61",
+    "pyrefly~=1.1",
     "types-pyyaml~=6.0.12",
 ]
 
 test = [
-    "coverage~=7.13",
-    "hypothesis>=6.152",
-    "pytest~=9.0",
-    "pytest-asyncio~=1.3",
+    "coverage~=7.15",
+    "hypothesis>=6.156",
+    "pytest~=9.1",
+    "pytest-asyncio~=1.4",
     "pytest-benchmark~=5.2",
     "pytest-cov~=7.1",
-    "pytest-memray>=1.8; sys_platform != 'win32'",
+    "pytest-memray>=1.9; sys_platform != 'win32'",
     "pytest-mock~=3.15",
     "pytest-xdist~=3.8",
     "testcontainers>=4.14",

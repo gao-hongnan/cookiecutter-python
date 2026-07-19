@@ -19,7 +19,7 @@ TAG ?= latest
 .PHONY: install
 install: .uv
 	uv sync --frozen --all-groups
-	uv run pre-commit install
+	uv run prek install
 
 .PHONY: sync
 sync: .uv
@@ -56,8 +56,10 @@ lint: .uv
 
 .PHONY: security
 security: .uv
-	@echo "Running security checks..."
+	@echo "Running static analysis (bandit)..."
 	@uv run bandit -c pyproject.toml -r $(PACKAGE_NAME)
+	@echo "Running dependency audit (pip-audit)..."
+	@uv run pip-audit --skip-editable
 
 .PHONY: typecheck
 typecheck: .uv
@@ -237,14 +239,14 @@ docs-clean:
 .PHONY: help
 help:
 	@echo "Setup Commands:"
-	@echo "  make install                 Install dependencies (frozen lock) + pre-commit hooks"
+	@echo "  make install                 Install dependencies (frozen lock) + prek hooks"
 	@echo "  make sync                    Sync dependencies (relaxed, for local iteration)"
 	@echo "  make lock                    Update and regenerate lock file"
 	@echo ""
 	@echo "Quality Commands:"
 	@echo "  make format                  Format code with ruff"
 	@echo "  make lint                    Lint Python, YAML{% if cookiecutter.use_docker %}, Docker{% endif %}, Markdown"
-	@echo "  make security                Security check with bandit"
+	@echo "  make security                Security checks (bandit + pip-audit)"
 	@echo "  make typecheck               Type check (mypy + pyright + ty + pyrefly)"
 	@echo "  make typecheck-fast          Type check with pyright only (fast feedback)"
 	@echo ""
