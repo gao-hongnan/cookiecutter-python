@@ -1,5 +1,5 @@
-ARG BUILDER_IMAGE=astral/uv:bookworm
-ARG RUNNER_IMAGE=debian:bookworm-slim
+ARG BUILDER_IMAGE=astral/uv:trixie
+ARG RUNNER_IMAGE=debian:trixie-slim
 
 # hadolint ignore=DL3006
 FROM ${BUILDER_IMAGE} AS builder

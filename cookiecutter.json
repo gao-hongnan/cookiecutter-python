@@ -8,6 +8,7 @@
     "github_username": "your-github-username",
     "python_version": "3.13",
     "license": ["MIT", "Apache-2.0"],
+    "hooks_runner": ["prek", "pre-commit"],
     "use_fastapi": false,
     "use_pydantic": true,
     "server_port": "8000",

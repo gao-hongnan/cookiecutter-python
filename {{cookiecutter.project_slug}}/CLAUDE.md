@@ -11,7 +11,7 @@ code in this repository.
 
 ```bash
 # Install / dependency management
-make install                         # uv sync --frozen + prek hooks
+make install                         # uv sync --frozen + {{ cookiecutter.hooks_runner }} hooks
 make sync                            # uv sync (relaxed, for local iteration)
 make lock                            # uv lock --upgrade
 
@@ -80,7 +80,7 @@ make dev                             # uvicorn with reload on port 8000
 
 ## Documentation
 
-Requires Node.js v20+ (mystmd engine).
+Requires Node.js v22+ (mystmd engine).
 
 ```bash
 make docs-build                      # build Jupyter Book
@@ -95,7 +95,9 @@ make docs-serve                      # local dev server (live reload)
 - **Type checking**: strict mode on all four checkers (mypy, pyright, ty, pyrefly)
     - Configuration in separate files: `.mypy.ini`, `ty.toml`, `pyrefly.toml`, `pyrightconfig.json`
 - **Security**: `make security` runs bandit (static analysis) + pip-audit (dependency vulnerability scan); part of `make ci`
-- **Git hooks (prek)**: ruff, yamllint, markdownlint, commitizen (fast hooks only - full checks in CI)
+- **Git hooks ({{ cookiecutter.hooks_runner }})**: ruff, yamllint, markdownlint, commitizen (fast hooks only - full checks in CI)
+    - Config in `.pre-commit-config.yaml`; prek and pre-commit both read it, so switching runners
+      means swapping the dep in `pyproject.toml` and `HOOKS_RUNNER` in the `Makefile`
 - **Testing**: pytest-asyncio (auto mode), pytest-cov, pytest-memray, pytest-benchmark, hypothesis, testcontainers
     - Configuration in `.pytest.ini`, coverage in `.coveragerc`
 - **Commit style**: conventional commits via commitizen

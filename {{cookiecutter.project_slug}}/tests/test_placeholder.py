@@ -5,10 +5,10 @@ from pytest_mock import MockFixture
 
 
 def test_import_package() -> None:
-    """Verify the package can be imported."""
+    """Verify the package can be imported and exposes its version."""
     import {{ cookiecutter.package_name }}
 
-    assert {{ cookiecutter.package_name }} is not None
+    assert {{ cookiecutter.package_name }}.__version__
 
 
 def test_with_fixture(sample_fixture: dict[str, str]) -> None:
