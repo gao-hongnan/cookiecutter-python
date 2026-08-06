@@ -102,16 +102,10 @@ def main() -> None:
         )
 
     if not validate_license(license_name):
-        errors.append(
-            f"ERROR: license '{license_name}' is not supported. "
-            "Supported licenses: MIT, Apache-2.0"
-        )
+        errors.append(f"ERROR: license '{license_name}' is not supported. Supported licenses: MIT, Apache-2.0")
 
     if not validate_hooks_runner(hooks_runner):
-        errors.append(
-            f"ERROR: hooks_runner '{hooks_runner}' is not supported. "
-            "Supported runners: prek, pre-commit"
-        )
+        errors.append(f"ERROR: hooks_runner '{hooks_runner}' is not supported. Supported runners: prek, pre-commit")
 
     if errors:
         for error in errors:
