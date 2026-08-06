@@ -1,3 +1,5 @@
+# Shared by prek and pre-commit — same config format, so switching runners
+# needs no edits here. This project runs {{ cookiecutter.hooks_runner }} (see HOOKS_RUNNER in the Makefile).
 default_install_hook_types: [pre-commit, commit-msg, pre-push]
 
 repos:
@@ -27,13 +29,13 @@ repos:
       - id: hadolint-docker
         name: Lint Dockerfiles
         language: docker_image
-        entry: hadolint/hadolint:v2.14.0 hadolint
+        entry: hadolint/hadolint:v2.15.1 hadolint
         files: (^|/)Dockerfile(\..+)?$
         pass_filenames: true
 {% endif %}
 
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.48.0
+    rev: v0.49.1
     hooks:
       - id: markdownlint
         name: Lint Markdown files
@@ -41,7 +43,7 @@ repos:
         exclude: ^(node_modules|\.venv|\.claude|(.*/)?_build)/
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.15.11
+    rev: v0.16.1
     hooks:
       - id: ruff
         name: Ruff Lint
@@ -50,13 +52,13 @@ repos:
         name: Ruff Format
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: v4.13.9
+    rev: v4.17.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.11.7
+    rev: 0.12.2
     hooks:
       - id: uv-lock
 

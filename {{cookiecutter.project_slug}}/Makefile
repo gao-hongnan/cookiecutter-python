@@ -2,6 +2,10 @@
 
 PACKAGE_NAME := {{ cookiecutter.package_name }}
 SOURCES := $(PACKAGE_NAME) tests
+# Git hooks runner. prek and pre-commit are CLI-compatible and read the same
+# .pre-commit-config.yaml, so swapping this (plus the dep in pyproject.toml) is
+# the only change needed to switch.
+HOOKS_RUNNER ?= {{ cookiecutter.hooks_runner }}
 PYTEST_ARGS ?=
 COVERAGE_MIN ?= 80
 DEPTH ?= 3
@@ -19,7 +23,7 @@ TAG ?= latest
 .PHONY: install
 install: .uv
 	uv sync --frozen --all-groups
-	uv run prek install
+	uv run $(HOOKS_RUNNER) install
 
 .PHONY: sync
 sync: .uv
@@ -47,7 +51,7 @@ lint: .uv
 	@uv run yamllint .
 {% if cookiecutter.use_docker %}
 	@echo "Running Dockerfile linting..."
-	@docker run --rm -v "$(CURDIR):/workdir" -w /workdir hadolint/hadolint:v2.14.0 \
+	@docker run --rm -v "$(CURDIR):/workdir" -w /workdir hadolint/hadolint:v2.15.1 \
 		hadolint --config .hadolint.yaml environments/container/Dockerfile
 {% endif %}
 	@echo "Running Markdown linting..."
@@ -239,7 +243,7 @@ docs-clean:
 .PHONY: help
 help:
 	@echo "Setup Commands:"
-	@echo "  make install                 Install dependencies (frozen lock) + prek hooks"
+	@echo "  make install                 Install dependencies (frozen lock) + $(HOOKS_RUNNER) hooks"
 	@echo "  make sync                    Sync dependencies (relaxed, for local iteration)"
 	@echo "  make lock                    Update and regenerate lock file"
 	@echo ""

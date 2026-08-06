@@ -49,6 +49,7 @@ All three auto-detect:
 | `github_username`     | _prompts at runtime_ | GitHub username for URLs                        |
 | `python_version`      | `3.13`               | Minimum Python version                          |
 | `license`             | `MIT`                | `MIT` or `Apache-2.0`                           |
+| `hooks_runner`        | `prek`               | `prek` or `pre-commit` (see below)              |
 | `use_fastapi`         | `false`              | FastAPI + uvicorn deps, `make dev`/`make serve` |
 | `use_docker`          | `false`              | Dockerfile, .env.template, hadolint             |
 | `use_database`        | `false`              | SQLAlchemy + Alembic + asyncpg, `make migrate`  |
@@ -67,15 +68,40 @@ All three auto-detect:
 `project_slug` and `package_name` are auto-derived from `project_name`. Override
 them at the prompt if you want something different.
 
+### Git hooks runner
+
+`hooks_runner` picks which tool manages the git hooks:
+
+| Runner             | Why                                                                    |
+| ------------------ | ---------------------------------------------------------------------- |
+| `prek` (default)   | Rust rewrite — faster, no Python env per hook repo, less disk           |
+| `pre-commit`       | The original. Widest ecosystem support; pick it if your org expects it  |
+
+Both read the same `.pre-commit-config.yaml` and share a CLI, so the generated
+project differs in only three spots: the dev dependency in `pyproject.toml`,
+`HOOKS_RUNNER` in the `Makefile`, and the binary the post-gen hook invokes. A
+single `<runner> install` installs all three hook types (pre-commit, commit-msg,
+pre-push) either way — `default_install_hook_types` is honoured by both.
+
+Switching after generation is the same three edits; the hook config never changes:
+
+```bash
+# in a generated project, swapping prek -> pre-commit
+uv remove --group lint prek && uv add --group lint pre-commit
+sed -i '' 's/^HOOKS_RUNNER ?= prek/HOOKS_RUNNER ?= pre-commit/' Makefile
+make install
+```
+
 ## What you get
 
 `make ci` passes out of the box:
 
 - **Ruff** linting + formatting (120 char line, comprehensive rules)
 - **Quadruple type checking**: mypy strict + pyright strict + ty + pyrefly
-- **pytest** with async support and coverage
+- **pytest** with async support and an 80% coverage gate — every optional module
+  (CLI, FastAPI app, DB session helpers) ships with tests that meet it
 - **Security**: bandit static analysis + pip-audit dependency vulnerability scan (`make security`)
-- **Git hooks (prek)**: ruff, mypy, yamllint, markdownlint, commitizen
+- **Git hooks (prek or pre-commit)**: ruff, mypy, yamllint, markdownlint, commitizen
 - **GitHub Actions**: CI on push/PR + PyPI release on tags
 - **Issue/PR templates** for GitHub
 - **Branch rulesets** as versioned JSON: PR + passing CI required on the
@@ -100,9 +126,12 @@ them at the prompt if you want something different.
 │   └── getting-started.md         (only if use_jupyter_book)
 ├── tests/
 │   ├── conftest.py
-│   └── test_placeholder.py
+│   ├── test_placeholder.py
+│   ├── test_cli.py                (only if use_cli)
+│   ├── test_main.py               (only if use_fastapi)
+│   └── test_db.py                 (only if use_database)
 ├── {{package_name}}/
-│   └── __init__.py
+│   └── __init__.py                (holds __version__)
 ├── .coveragerc
 ├── .dockerignore              (only if use_docker)
 ├── .env.sample
@@ -131,7 +160,7 @@ For greenfield projects, the hook automatically runs:
 
 1. `git init` + initial commit
 2. `uv sync --all-groups`
-3. `prek install` (pre-commit, commit-msg + pre-push hooks)
+3. `<hooks_runner> install` (pre-commit, commit-msg + pre-push hooks)
 
 If any step fails, a warning is printed — run `make install` manually.
 
@@ -140,4 +169,4 @@ If any step fails, a warning is printed — run `make install` manually.
 - Python 3.13+
 - [uv](https://docs.astral.sh/uv/) (installed automatically by bootstrap)
 - git
-- [Node.js](https://nodejs.org/) v20+ (only if `use_jupyter_book` is enabled)
+- [Node.js](https://nodejs.org/) v22+ (markdownlint-cli requires it; also used by Jupyter Book)

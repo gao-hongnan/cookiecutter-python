@@ -32,7 +32,7 @@ make serve     # Start production server
 
 ## Documentation
 
-Requires [Node.js](https://nodejs.org/) v20+ (Jupyter Book v2 uses the mystmd engine).
+Requires [Node.js](https://nodejs.org/) v22+ (Jupyter Book v2 uses the mystmd engine).
 
 ```bash
 make docs-build  # Build Jupyter Book documentation

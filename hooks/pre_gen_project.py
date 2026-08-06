@@ -58,12 +58,26 @@ def validate_license(license_name: str) -> bool:
     return license_name in supported
 
 
+def validate_hooks_runner(runner: str) -> bool:
+    """Validate the git hooks runner is supported.
+
+    Args:
+        runner: Name of the hooks runner
+
+    Returns:
+        True if supported, False otherwise
+    """
+    supported = ["prek", "pre-commit"]
+    return runner in supported
+
+
 def main() -> None:
     """Run all validations."""
     package_name = "{{ cookiecutter.package_name }}"
     project_slug = "{{ cookiecutter.project_slug }}"
     python_version = "{{ cookiecutter.python_version }}"
     license_name = "{{ cookiecutter.license }}"
+    hooks_runner = "{{ cookiecutter.hooks_runner }}"
 
     errors = []
 
@@ -91,6 +105,12 @@ def main() -> None:
         errors.append(
             f"ERROR: license '{license_name}' is not supported. "
             "Supported licenses: MIT, Apache-2.0"
+        )
+
+    if not validate_hooks_runner(hooks_runner):
+        errors.append(
+            f"ERROR: hooks_runner '{hooks_runner}' is not supported. "
+            "Supported runners: prek, pre-commit"
         )
 
     if errors:

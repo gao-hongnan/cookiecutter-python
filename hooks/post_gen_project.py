@@ -48,6 +48,7 @@ def remove_database_files() -> None:
         Path("alembic.ini"),
         Path("alembic"),
         Path("{{ cookiecutter.package_name }}/db.py"),
+        Path("tests/test_db.py"),
     ]
     for f in database_files:
         if f.exists():
@@ -59,16 +60,24 @@ def remove_database_files() -> None:
 
 def remove_fastapi_files() -> None:
     """Remove FastAPI-related files when use_fastapi is false."""
-    fastapi_file = Path("{{ cookiecutter.package_name }}/main.py")
-    if fastapi_file.exists():
-        fastapi_file.unlink()
+    fastapi_files = [
+        Path("{{ cookiecutter.package_name }}/main.py"),
+        Path("tests/test_main.py"),
+    ]
+    for f in fastapi_files:
+        if f.exists():
+            f.unlink()
 
 
 def remove_cli_files() -> None:
     """Remove CLI-related files when use_cli is false."""
-    cli_file = Path("{{ cookiecutter.package_name }}/cli.py")
-    if cli_file.exists():
-        cli_file.unlink()
+    cli_files = [
+        Path("{{ cookiecutter.package_name }}/cli.py"),
+        Path("tests/test_cli.py"),
+    ]
+    for f in cli_files:
+        if f.exists():
+            f.unlink()
 
 
 def remove_branch_ruleset_files() -> None:
@@ -94,19 +103,27 @@ def init_git() -> None:
         print("WARNING: git not found. Skipping git initialization.", file=sys.stderr)
 
 
-def init_uv_and_prek() -> None:
-    """Install dependencies and git hooks (prek)."""
+def init_uv_and_hooks(hooks_runner: str) -> None:
+    """Install dependencies and git hooks.
+
+    Args:
+        hooks_runner: Hooks runner to install with, either "prek" or "pre-commit".
+            Both read the same .pre-commit-config.yaml.
+    """
     try:
         subprocess.run(["uv", "sync", "--all-groups"], check=True)
     except (subprocess.CalledProcessError, FileNotFoundError):
         print("WARNING: uv sync failed. Run 'make install' manually.", file=sys.stderr)
 
     try:
-        # A single `prek install` honours default_install_hook_types in
-        # .pre-commit-config.yaml (pre-commit, commit-msg, pre-push).
-        subprocess.run(["uv", "run", "prek", "install"], check=True)
+        # A single `install` honours default_install_hook_types in
+        # .pre-commit-config.yaml (pre-commit, commit-msg, pre-push) for both runners.
+        subprocess.run(["uv", "run", hooks_runner, "install"], check=True)
     except (subprocess.CalledProcessError, FileNotFoundError):
-        print("WARNING: prek install failed. Run 'make install' manually.", file=sys.stderr)
+        print(
+            f"WARNING: {hooks_runner} install failed. Run 'make install' manually.",
+            file=sys.stderr,
+        )
 
 
 def main() -> None:
@@ -116,6 +133,7 @@ def main() -> None:
     use_fastapi = "{{ cookiecutter.use_fastapi }}"
     use_cli = "{{ cookiecutter.use_cli }}"
     use_branch_rulesets = "{{ cookiecutter.use_branch_rulesets }}"
+    hooks_runner = "{{ cookiecutter.hooks_runner }}"
 
     if use_docker.lower() != "true":
         remove_docker_files()
@@ -136,7 +154,7 @@ def main() -> None:
         remove_branch_ruleset_files()
 
     init_git()
-    init_uv_and_prek()
+    init_uv_and_hooks(hooks_runner)
 
     print(f"\nProject '{{ cookiecutter.project_name }}' created successfully!")
     print("\nNext steps:")
