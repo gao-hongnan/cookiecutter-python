@@ -1,0 +1,16 @@
+# Ruff config for the template repo itself (the cookiecutter hooks), not for
+# generated projects — those get their own .ruff.toml from the template dir.
+#
+# The template directory holds Jinja source: `{{cookiecutter.project_slug}}/.ruff.toml`
+# sets `target-version = "py{{ ... }}"`, which is not valid TOML, so ruff aborts
+# with a config error the moment it walks in there. Excluding the directory
+# stops that.
+#
+# The braces must be escaped as character classes: ruff globs treat `{a,b}` as
+# alternation, so a literal `{{cookiecutter.project_slug}}` pattern is parsed as
+# nested alternation and silently never matches.
+extend-exclude = ["[{][{]cookiecutter.project_slug[}][}]"]
+
+# Match the line length the hooks are already written to, and that the template
+# hands to generated projects.
+line-length = 120

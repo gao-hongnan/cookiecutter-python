@@ -156,7 +156,7 @@ def main() -> None:
     init_git()
     init_uv_and_hooks(hooks_runner)
 
-    print(f"\nProject '{{ cookiecutter.project_name }}' created successfully!")
+    print("\nProject '{{ cookiecutter.project_name }}' created successfully!")
     print("\nNext steps:")
     print("  1. cp .env.sample .env          # Configure environment variables")
     print("  2. cp .secret.sample .secrets  # Configure secrets")
