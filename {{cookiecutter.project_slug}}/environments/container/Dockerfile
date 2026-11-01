@@ -1,4 +1,4 @@
-ARG BUILDER_IMAGE=astral/uv:trixie
+ARG BUILDER_IMAGE=astral/uv:0.13-trixie
 ARG RUNNER_IMAGE=debian:trixie-slim
 
 # hadolint ignore=DL3006
@@ -44,7 +44,7 @@ EXPOSE {{ cookiecutter.server_port }}
 {% if cookiecutter.use_fastapi %}
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:{{ cookiecutter.server_port }}/')"]
+    CMD ["python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:{{ cookiecutter.server_port }}/health', timeout=4)"]
 
 CMD ["uvicorn", "{{ cookiecutter.package_name }}.main:app", "--host", "0.0.0.0", "--port", "{{ cookiecutter.server_port }}"]
 {% else %}

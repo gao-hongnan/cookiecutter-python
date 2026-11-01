@@ -47,7 +47,7 @@ All three auto-detect:
 | `author_name`         | _prompts at runtime_ | Your name                                       |
 | `author_email`        | _prompts at runtime_ | Your email                                      |
 | `github_username`     | _prompts at runtime_ | GitHub username for URLs                        |
-| `python_version`      | `3.13`               | Minimum Python version                          |
+| `python_version`      | `3.14`               | Minimum Python version                          |
 | `license`             | `MIT`                | `MIT` or `Apache-2.0`                           |
 | `hooks_runner`        | `prek`               | `prek` or `pre-commit` (see below)              |
 | `use_fastapi`         | `false`              | FastAPI + uvicorn deps, `make dev`/`make serve` |
@@ -158,15 +158,15 @@ make install
 
 For greenfield projects, the hook automatically runs:
 
-1. `git init` + initial commit
-2. `uv sync --all-groups`
+1. `uv sync --all-groups` (writes `uv.lock`)
+2. `git init` + initial commit (includes `uv.lock`)
 3. `<hooks_runner> install` (pre-commit, commit-msg + pre-push hooks)
 
 If any step fails, a warning is printed — run `make install` manually.
 
 ## Requirements
 
-- Python 3.13+
+- Python 3.14+
 - [uv](https://docs.astral.sh/uv/) (installed automatically by bootstrap)
 - git
 - [Node.js](https://nodejs.org/) v22+ (markdownlint-cli requires it; also used by Jupyter Book)

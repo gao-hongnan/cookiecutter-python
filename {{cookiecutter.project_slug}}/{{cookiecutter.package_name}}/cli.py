@@ -4,6 +4,8 @@ from typing import Annotated
 
 import typer
 
+from {{ cookiecutter.package_name }} import __version__
+
 app = typer.Typer(
     name="{{ cookiecutter.project_slug }}",
     help="{{ cookiecutter.project_description }}",
@@ -26,7 +28,7 @@ def hello(
 @app.command()
 def version() -> None:
     """Show the version."""
-    typer.echo("{{ cookiecutter.project_slug }} 0.1.0")
+    typer.echo(f"{{ cookiecutter.project_slug }} {__version__}")
 
 
 if __name__ == "__main__":

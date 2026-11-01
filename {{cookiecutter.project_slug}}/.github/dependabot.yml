@@ -1,11 +1,27 @@
 version: 2
 updates:
-  - package-ecosystem: "pip"
+  # The uv ecosystem updates pyproject.toml and uv.lock together;
+  # the plain pip ecosystem cannot touch uv.lock.
+  - package-ecosystem: "uv"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      python-dependencies:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      github-actions:
+        patterns: ["*"]
+{%- if cookiecutter.use_docker %}
+
+  - package-ecosystem: "docker"
+    directory: "/environments/container"
+    schedule:
+      interval: "weekly"
+{%- endif %}

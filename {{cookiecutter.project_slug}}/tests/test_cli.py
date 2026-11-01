@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typer.testing import CliRunner
 
+from {{ cookiecutter.package_name }} import __version__
 from {{ cookiecutter.package_name }}.cli import app
 
 runner = CliRunner()
@@ -38,7 +39,7 @@ def test_version_prints_the_project_version() -> None:
     result = runner.invoke(app, ["version"])
 
     assert result.exit_code == 0
-    assert "{{ cookiecutter.project_slug }}" in result.stdout
+    assert f"{{ cookiecutter.project_slug }} {__version__}" in result.stdout
 
 
 def test_no_args_shows_help() -> None:

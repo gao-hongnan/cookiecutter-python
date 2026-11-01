@@ -9,26 +9,33 @@ env:
   UV_SYSTEM_CERTS: "true"
   FORCE_COLOR: 1
 
+permissions: {}
+
 jobs:
   ci:
     uses: ./.github/workflows/ci.yml
+    permissions:
+      contents: read
 
   release:
     name: Publish to PyPI
     needs: ci
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       id-token: write
       contents: write
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
-      - uses: astral-sh/setup-uv@v9
+      - uses: astral-sh/setup-uv@v10
         with:
           version: "latest"
-          enable-cache: true
-          cache-dependency-glob: "**/pyproject.toml"
+          # No cache in the publish job: a poisoned cache could tamper with the built artifact.
+          enable-cache: false
 
       - name: Build package
         run: uv build
@@ -49,6 +56,6 @@ jobs:
         env:
           GH_TOKEN: {% raw %}${{ github.token }}{% endraw %}
         run: |
-          gh release create "{% raw %}${{ github.ref_name }}{% endraw %}" \
-            --title "Release {% raw %}${{ github.ref_name }}{% endraw %}" \
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "Release ${GITHUB_REF_NAME}" \
             --notes-file release_notes.md

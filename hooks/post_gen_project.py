@@ -103,18 +103,27 @@ def init_git() -> None:
         print("WARNING: git not found. Skipping git initialization.", file=sys.stderr)
 
 
-def init_uv_and_hooks(hooks_runner: str) -> None:
-    """Install dependencies and git hooks.
+def sync_dependencies() -> None:
+    """Resolve and install dependencies, writing uv.lock.
 
-    Args:
-        hooks_runner: Hooks runner to install with, either "prek" or "pre-commit".
-            Both read the same .pre-commit-config.yaml.
+    Runs before the initial commit so uv.lock is part of it: CI installs with
+    ``uv sync --frozen``, which fails when the lockfile is missing.
     """
     try:
         subprocess.run(["uv", "sync", "--all-groups"], check=True)
     except (subprocess.CalledProcessError, FileNotFoundError):
         print("WARNING: uv sync failed. Run 'make install' manually.", file=sys.stderr)
 
+
+def install_hooks(hooks_runner: str) -> None:
+    """Install git hooks.
+
+    Runs after the initial commit so the hooks do not fire on it.
+
+    Args:
+        hooks_runner: Hooks runner to install with, either "prek" or "pre-commit".
+            Both read the same .pre-commit-config.yaml.
+    """
     try:
         # A single `install` honours default_install_hook_types in
         # .pre-commit-config.yaml (pre-commit, commit-msg, pre-push) for both runners.
@@ -153,8 +162,9 @@ def main() -> None:
     if use_branch_rulesets.lower() != "true":
         remove_branch_ruleset_files()
 
+    sync_dependencies()
     init_git()
-    init_uv_and_hooks(hooks_runner)
+    install_hooks(hooks_runner)
 
     print("\nProject '{{ cookiecutter.project_name }}' created successfully!")
     print("\nNext steps:")
