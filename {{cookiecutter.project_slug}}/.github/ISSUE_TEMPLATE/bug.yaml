@@ -102,7 +102,7 @@ body:
     id: python
     attributes:
       label: Python version
-      placeholder: 3.13.1
+      placeholder: 3.14.0
     validations:
       required: true
 

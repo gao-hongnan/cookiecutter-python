@@ -3,10 +3,12 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
+from {{ cookiecutter.package_name }} import __version__
+
 app = FastAPI(
     title="{{ cookiecutter.project_name }}",
     description="{{ cookiecutter.project_description }}",
-    version="0.1.0",
+    version=__version__,
 )
 
 

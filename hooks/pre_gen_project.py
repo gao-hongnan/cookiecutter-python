@@ -41,7 +41,7 @@ def validate_python_version(version: str) -> bool:
     Returns:
         True if supported, False otherwise
     """
-    supported = ["3.10", "3.11", "3.12", "3.13", "3.14"]
+    supported = ["3.10", "3.11", "3.12", "3.13", "3.14", "3.15"]
     return version in supported
 
 
@@ -98,7 +98,7 @@ def main() -> None:
     if not validate_python_version(python_version):
         errors.append(
             f"ERROR: python_version '{python_version}' is not supported. "
-            "Supported versions: 3.10, 3.11, 3.12, 3.13, 3.14"
+            "Supported versions: 3.10, 3.11, 3.12, 3.13, 3.14, 3.15"
         )
 
     if not validate_license(license_name):

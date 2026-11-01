@@ -5,6 +5,9 @@ on:
   pull_request:
   workflow_call:
 
+permissions:
+  contents: read
+
 concurrency:
   group: {% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}
   cancel-in-progress: {% raw %}${{ github.ref != 'refs/heads/main' }}{% endraw %}
@@ -19,6 +22,7 @@ jobs:
   ci:
     name: CI Python {% raw %}${{ matrix.python-version }}{% endraw %} on {% raw %}${{ matrix.os }}{% endraw %}
     runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -27,19 +31,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 24
+          node-version: 26
 
-      - run: npm install -g markdownlint-cli
+      # Keep in step with the markdownlint-cli rev in .pre-commit-config.yaml.
+      - run: npm install -g markdownlint-cli@0.50.0
 
-      - uses: astral-sh/setup-uv@v9
+      - uses: astral-sh/setup-uv@v10
         with:
           version: "latest"
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
           enable-cache: true
-          cache-dependency-glob: "**/pyproject.toml"
 
       - name: Install dependencies
         run: make install
