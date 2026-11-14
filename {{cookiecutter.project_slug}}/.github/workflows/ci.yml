@@ -41,7 +41,7 @@ jobs:
       # Keep in step with the markdownlint-cli rev in .pre-commit-config.yaml.
       - run: npm install -g markdownlint-cli@0.50.0
 
-      - uses: astral-sh/setup-uv@v10
+      - uses: astral-sh/setup-uv@v10.3.3
         with:
           version: "latest"
           python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
